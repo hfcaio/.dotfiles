@@ -1,0 +1,80 @@
+* {
+    font-family: Fira Code Nerd Font;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #c0caf5;
+}
+
+window {
+    border-radius: 2.5rem;
+}
+
+window#waybar {
+    margin-top: 3px;
+    background: rgba(47, 51, 53, 0.3);
+}
+
+tooltip {
+    background: #1e1e2e;
+    border-radius: 5%;
+}
+
+#workspaces button {
+    padding: 0 0.5rem;
+    margin: 0.5rem;
+    background: transparent;
+    color: white;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.focused {
+    color: #a6adc8;
+}
+
+
+#workspaces button.active {
+    border-bottom: 3px solid #7aa2f7;
+    margin-top: 3px;
+    transition: all 0.5s ease-in-out;
+}
+
+#clock,
+#battery,
+#tray,
+#bluetooth,
+#pulseaudio,
+#light,
+#network {
+    background: rgba(26, 27, 38, 0.6);
+    padding: 0 1rem;
+    margin: 0 0.5rem;
+    border-radius: 12px;
+    margin-right: 4px;
+
+}
+
+@keyframes blink {
+    to {
+        background-color: #f38ba8;
+        color: #181825;
+    }
+}
+
+#battery.warning,
+#battery.critical,
+#battery.urgent {
+    background-color: #ff0048;
+    color: #181825;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: #ffffff;
+    background-color: #26A65B;
+    animation: none;
+}
