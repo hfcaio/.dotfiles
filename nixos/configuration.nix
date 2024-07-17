@@ -5,27 +5,26 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   #enable proprietary software
   nixpkgs.config.allowUnfree = true;
 
   #enable hyprland
   programs.hyprland = {
-	enable = true;
-	#nvidiaPatches = true;
-	xwayland.enable = true;
+    enable = true;
+    xwayland.enable = true;
   };
 
   # configure xdg
   xdg.portal = {
-  	enable = true;
-	extraPortals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
+    enable = true;
+    extraPortals =
+      [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   };
- 
+
   # enable zsh
   programs.zsh.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -35,8 +34,9 @@
 
   networking.hostName = "nixOS"; # Define your hostname.
   # Pick only one of the below networking options. 
- 
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
@@ -55,12 +55,15 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.sddm.wayland.enable = true;
-  #services.xserver.displayManager.sddm.settings = {Font="Fira Code"};
-  services.xserver.displayManager.sddm.theme = "${import ./sddm-theme.nix {inherit pkgs; }}";
   # Configure keymap in X11
   services.xserver.xkb.layout = "br";
+
+  #config sddm 
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  #services.displayManager.sddm.settings = {Font="Fira Code"};
+  services.displayManager.sddm.theme =
+    "${import ./sddm-theme.nix { inherit pkgs; }}";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
@@ -73,16 +76,15 @@
   hardware.pulseaudio.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.caio = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "docker" "networkManager"]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-        brave
-    ];
+    extraGroups =
+      [ "wheel" "docker" "networkManager" ]; # Enable ‘sudo’ for the user.
+    packages = with pkgs; [ brave ];
   };
 
   virtualisation.docker.enable = true;
@@ -90,7 +92,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
     wget
     git
@@ -105,18 +106,15 @@
     btop
     xorg.xhost
     xorg.xauth
-    #nvidia-container-toolkit
 
     vscode
     gcc
-    
-    python3  
+
+    python3
     usbutils
     mission-planner
-    #hyprshot
     brightnessctl
-    #python311Packages.pip
-    #python311Packages.pyserial
+    nixfmt-classic
     #fprintd-tod
   ];
 
@@ -134,9 +132,9 @@
   #    driver = pkgs.libfprint-2-tod1-vfs0090;
   #  };
   #};
-  
+
   #security.pam.services.login.fprintAuth = true; 
-  
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -145,11 +143,8 @@
   #   enableSSHSupport = true;
   # };
 
-  
-
-
   # List services that you want to enable:
-  
+
   services.pipewire.enable = true;
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
