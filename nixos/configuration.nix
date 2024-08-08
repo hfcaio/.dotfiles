@@ -37,6 +37,7 @@
 
   networking.networkmanager.enable =
     true; # Easiest to use and most distros use this by default.
+networking.dnsExtensionMechanism = false;
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";

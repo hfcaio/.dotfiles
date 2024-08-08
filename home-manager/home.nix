@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 
-
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -37,9 +36,11 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-avrdude
+    avrdude
     waybar
     alacritty
+
+    starship
     fira-code-nerdfont
     angryipscanner
     octaveFull
@@ -49,10 +50,11 @@ avrdude
     ghdl
     discord
     eagle
-obs-studio  
-hyprshot
-hypridle
-hyprlock
+    obs-studio
+    hyprshot
+    hypridle
+    hyprlock
+    catppuccin
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -90,7 +92,6 @@ hyprlock
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-
   # configure waybar
   programs.waybar = {
     enable = true;
@@ -102,7 +103,7 @@ hyprlock
         position = "top";
         modules-left = [ "custom/logo" "hyprland/workspaces" ];
         modules-center = [ "clock" ];
-        modules-right = [ "light" "pulseaudio" "network" "battery" ];
+        modules-right = [ "backlight" "pulseaudio" "network" "battery" ];
 
         battery = {
           format = "{capacity}% {icon}";
@@ -119,10 +120,12 @@ hyprlock
           tooltip = false;
         };
 
-        light = {
-          format = "{brightness}% {icon}";
+        backlight = {
+          device = "intel_backlight";
+          format = "{percent}% {icon}";
+          format-icons = [ "" "" ];
         };
-        
+
         network = {
           format-wifi = "{essid} ({signalStrength}%) ";
           format-ethernet = "{ipaddr}/{cidr}";
@@ -160,14 +163,30 @@ hyprlock
     };
   };
 
+  programs.starship = {
+    enable = true;
+    #palette = "catppuccin_frappe";
+    enableZshIntegration = true;
+    settings = {
+      add_newline = false;
+      character = {
+        success_symbol = "[>](bold green)";
+        error_symbol = "[>](bold red)";
+      };
+      git_branch = {
+        symbol = " ";
+        style = "bright-white";
+      };
+  };
+
   # configure zsh
   programs.zsh = {
     enable = true;
-    #autosuggestion.enable = true;
+    #autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh.enable = true;
     oh-my-zsh.plugins = [ "git" "z" ];
-    oh-my-zsh.theme = "bira";
+
   };
 
   #configure alacritty 

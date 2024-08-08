@@ -43,7 +43,7 @@ tooltip {
 #tray,
 #bluetooth,
 #pulseaudio,
-#light,
+#backlight,
 #network {
     background: rgba(26, 27, 38, 0.6);
     padding: 0 1rem;
