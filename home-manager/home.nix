@@ -13,7 +13,7 @@
   #
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
-  # release notes.
+
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
   fonts.fontconfig.enable = true;
@@ -43,18 +43,14 @@
     starship
     fira-code-nerdfont
     angryipscanner
-    octaveFull
     arduino
-    quartus-prime-lite
-    gtkwave
-    ghdl
     discord
-    eagle
     obs-studio
     hyprshot
     hypridle
     hyprlock
     catppuccin
+    neovim
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -64,6 +60,12 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
+    "alacrity.yml".source = config.lib.file.mkOutOfStoreSymlink "/home/caio/.config/alacritty/alacritty.yml";
+    "waybar.css".source = config.lib.file.mkOutOfStoreSymlink "/home/caio/.config/waybar/waybar.css";
+    "nvim" = {
+      source = config.lib.file.mkOutOfStoreSymlink "/home/caio/.config/nvim";
+      recursive = true;
+    };
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
@@ -177,11 +179,13 @@
         symbol = " ";
         style = "bright-white";
       };
+    };
   };
 
   # configure zsh
   programs.zsh = {
     enable = true;
+    dotDir = "~/.config/zsh";
     #autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh.enable = true;
@@ -193,6 +197,20 @@
   programs.alacritty.enable = true;
   programs.alacritty.settings = {
     window.opacity = 0.5;
+  };
 
+  #configure neovim
+  programs.neovim = {
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    withPython3 = true;
+    plugins = with pkgs.vimPlugins; [
+      vim-tree-lua
+      harpoon
+      telescope-fzf-native-nvim
+      catppuccin-nvim
+    ];
   };
 }
+
