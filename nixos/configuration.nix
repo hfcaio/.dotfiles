@@ -12,6 +12,8 @@
   #enable proprietary software
   nixpkgs.config.allowUnfree = true;
 
+  services.envfs.enable = true;
+
   #enable hyprland
   programs.hyprland = {
     enable = true;
@@ -27,7 +29,17 @@
 
   # enable zsh
   programs.zsh.enable = true;
+
+  #settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.allowed-users = [ "caio" ];
+
+  #printer
+  services.printing = {
+    enable = true;
+    drivers = [pkgs.gutenprint pkgs.brlaser];
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -35,9 +47,8 @@
   networking.hostName = "nixOS"; # Define your hostname.
   # Pick only one of the below networking options. 
 
-  networking.networkmanager.enable =
-    true; # Easiest to use and most distros use this by default.
-networking.dnsExtensionMechanism = false;
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  networking.dnsExtensionMechanism = false;
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
@@ -93,7 +104,6 @@ networking.dnsExtensionMechanism = false;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim
     wget
     git
     unzip
@@ -113,11 +123,20 @@ networking.dnsExtensionMechanism = false;
 
     python3
     usbutils
-    mission-planner
     brightnessctl
     nixfmt-classic
     #fprintd-tod
   ];
+
+  environment.etc = {
+    "kitty.conf".source = ../kitty/kitty.conf;
+    "hypr" = {
+      source = ../hypr;
+    };
+
+
+  };
+
 
   # enable bluetooth
   hardware.bluetooth.enable = true;
