@@ -74,11 +74,6 @@ in {
 
         "$mainMod" = "SUPER";
 
-        device = {
-          name = new_status;
-          sensitivity = -0.5;
-        };
-
         bind = [
           "$mainMod, T, exec, kitty"
           "$mainMod, Q, killactive, "

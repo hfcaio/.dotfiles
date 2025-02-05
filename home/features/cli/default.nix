@@ -13,6 +13,6 @@
     unzip
     wget
     git
-    nixfmt-classic
+    nixfmt
   ];
 }
