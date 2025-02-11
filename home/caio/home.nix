@@ -7,7 +7,7 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = lib.mkDefault "your-name";
+  home.username = lib.mkDefault "caio";
   home.homeDirectory = lib.mkDefault "/home/${config.home.username}";
 
   # This value determines the Home Manager release that your configuration is
@@ -72,8 +72,17 @@
   #
   #  /etc/profiles/per-user/m3tam3re/etc/profile.d/hm-session-vars.sh
   #
+
+  programs.kitty = {
+    enable = true;
+    font.name = "Fira Code";
+    font.size = 12;
+    shellIntegration.enableZshIntegration = true;
+  };
+}
+
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "neovim";
   };
 
   # Let Home Manager install and manage itself.

@@ -77,17 +77,11 @@ in {
     };
 
     home.packages = with pkgs; [
-      grim
+      hypaper
+      waybar
+      hyprshot
+      hypridle
       hyprlock
-      qt6.qtwayland
-      slurp
-      waypipe
-      wf-recorder
-      wl-mirror
-      wl-clipboard
-      wlogout
-      wtype
-      ydotool
     ];
   };
 }

@@ -15,8 +15,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+
+    dotfiles = {
+      url = "git+https://code.m3tam3re.com/m3tam3re/dotfiles-flake-demo.git";
+      flake = false;
+    };
   };
 
   outputs = { self, home-manager, nixpkgs, ... }@inputs:
@@ -37,7 +43,10 @@
       nixosConfigurations = {
         nixOS = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/nixOS ];
+          modules = [ 
+            ./hosts/nixOS
+            inputs.disko.nixosModules.disko
+          ];
         };
       };
       homeConfigurations = {
