@@ -12,7 +12,6 @@
     zip
     unzip
     wget
-    git
     nixfmt
   ];
 }

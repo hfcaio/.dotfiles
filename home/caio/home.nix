@@ -79,7 +79,6 @@
     font.size = 12;
     shellIntegration.enableZshIntegration = true;
   };
-}
 
   home.sessionVariables = {
     EDITOR = "neovim";
