@@ -81,6 +81,7 @@ in {
       hyprshot
       hypridle
       hyprlock
+      hyprpaper
     ];
   };
 }

@@ -37,19 +37,6 @@ in {
           allow_tearing = false;
         };
 
-        decoration = {
-          "col.shadow" = "rgba(1a1a1aee)";
-          drop_shadow = true;
-          shadow_range = 4;
-          shadow_render_power = 3;
-          rounding = 10;
-          blur = {
-            enabled = true;
-            size = 3;
-            passes = 1;
-          };
-        };
-
         animations = {
           enabled = true;
           bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
