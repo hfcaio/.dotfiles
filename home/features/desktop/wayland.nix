@@ -77,7 +77,6 @@ in {
     };
 
     home.packages = with pkgs; [
-      hypaper
       waybar
       hyprshot
       hypridle
