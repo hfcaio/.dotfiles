@@ -78,6 +78,8 @@ in {
 
     home.packages = with pkgs; [
       waybar
+      brightnessctl
+      pulseaudio
       hyprshot
       hypridle
       hyprlock

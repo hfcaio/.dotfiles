@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let cfg = config.features.desktop.hyprland;
 in {
@@ -7,6 +7,7 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
+      plugins = with pkgs; [ brightnessctl pulseaudio ];
       settings = {
         xwayland = { force_zero_scaling = true; };
 
@@ -14,7 +15,7 @@ in {
 
         env = [ "XCURSOR_SIZE,12" ];
 
-	monitor = ",1920x1080,auto,1 ";
+        monitor = ",1920x1080,auto,1 ";
 
         input = {
           kb_layout = "br";
@@ -29,8 +30,6 @@ in {
           sensitivity = 0;
         };
 
-
-
         general = {
           gaps_in = 5;
           gaps_out = 20;
@@ -41,21 +40,21 @@ in {
           allow_tearing = false;
         };
 
-	decoration = {
-	  rounding = 10;
-	  shadow = {
-	    enabled = true;
-	    range = 4;
-	    render_power = 3;
-	    color = "rgba(1a1a1aee)";
-	  };
+        decoration = {
+          rounding = 10;
+          shadow = {
+            enabled = true;
+            range = 4;
+            render_power = 3;
+            color = "rgba(1a1a1aee)";
+          };
 
-	  blur = {
-	    enabled = true;
-	    size = 3;
-	    passes = 1;
-	  };
-	};
+          blur = {
+            enabled = true;
+            size = 3;
+            passes = 1;
+          };
+        };
 
         animations = {
           enabled = true;
@@ -114,9 +113,6 @@ in {
           "$mainMod, mouse_down, workspace, e+1"
           "$mainMod, mouse_up, workspace, e-1"
 
-          # Screen brightness level control
-          ",XF86MonBrightnessDown,exec,brightnessctl set 5%-"
-          ",XF86MonBrightnessUp,exec,brightnessctl set +5%"
         ];
 
         bindm = [
@@ -125,6 +121,9 @@ in {
         ];
 
         bindel = [
+          # Screen brightness level control
+          ",XF86MonBrightnessDown,exec,brightnessctl set 5%-"
+          ",XF86MonBrightnessUp,exec,brightnessctl set +5%"
           # Volume control through keyboard
           ", xf86audioraisevolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
           ", xf86audiolowervolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
@@ -134,6 +133,18 @@ in {
           ", keyboard_brightness_down_shortcut, exec, brightnessctl -d *::kbd_backlight set -5%"
         ];
 
+      };
+    };
+
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        preload = [
+          "/home/caio/git_projects/.dotfiles/home/features/desktop/images/wallpapersden.com_depressed-alone_3840x2743.jpg"
+        ];
+        wallpaper = [
+          ",/home/caio/git_projects/.dotfiles/home/features/desktop/images/wallpapersden.com_depressed-alone_3840x2743.jpg"
+        ];
       };
     };
   };

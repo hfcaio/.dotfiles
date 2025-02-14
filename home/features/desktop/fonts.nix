@@ -1,11 +1,6 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-with lib; let
-  cfg = config.features.desktop.fonts;
+{ config, lib, pkgs, ... }:
+with lib;
+let cfg = config.features.desktop.fonts;
 in {
   options.features.desktop.fonts.enable =
     mkEnableOption "install additional fonts for desktop apps";
@@ -15,9 +10,6 @@ in {
       fira-code
       fira-code-symbols
       fira-code-nerdfont
-      font-manager
-      font-awesome_5
-      noto-fonts
     ];
   };
 }
