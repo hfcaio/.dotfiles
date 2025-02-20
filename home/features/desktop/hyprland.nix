@@ -7,7 +7,14 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      plugins = with pkgs; [ brightnessctl pulseaudio ];
+      systemd = {
+        enable = true;
+        # Same as default, but stop graphical-session too
+        extraCommands = lib.mkBefore [
+          "systemctl --user stop graphical-session.target"
+          "systemctl --user start hyprland-session.target"
+        ];
+      };
       settings = {
         xwayland = { force_zero_scaling = true; };
 
@@ -120,17 +127,20 @@ in {
           "$mainMod, mouse:273, resizewindow"
         ];
 
-        bindel = [
+        bindel = let
+          pactl = lib.getExe' pkgs.pulseaudio "pactl";
+          brightnessctl = lib.getExe' pkgs.brightnessctl "brightnessctl";
+        in [
           # Screen brightness level control
-          ",XF86MonBrightnessDown,exec,brightnessctl set 5%-"
-          ",XF86MonBrightnessUp,exec,brightnessctl set +5%"
+          ",XF86MonBrightnessDown,exec,${brightnessctl} set 5%-"
+          ",XF86MonBrightnessUp,exec,${brightnessctl} set +5%"
           # Volume control through keyboard
-          ", xf86audioraisevolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-          ", xf86audiolowervolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-          ", xf86audiomute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
+          ", xf86audioraisevolume, exec, ${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
+          ", xf86audiolowervolume, exec, ${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
+          ", xf86audiomute, exec, ${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
           # Keyboard brightness level control
-          ", keyboard_brightness_up_shortcut, exec, brightnessctl -d *::kbd_backlight set +5%"
-          ", keyboard_brightness_down_shortcut, exec, brightnessctl -d *::kbd_backlight set -5%"
+          ", keyboard_brightness_up_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set +5%"
+          ", keyboard_brightness_down_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set -5%"
         ];
 
       };
