@@ -7,6 +7,7 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
+      xwayland.enable = true;
       systemd = {
         enable = true;
         # Same as default, but stop graphical-session too

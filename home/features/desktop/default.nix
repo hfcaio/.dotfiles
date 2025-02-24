@@ -1,10 +1,5 @@
-{pkgs, ...}: {
-  imports = [
-    ./hyprland.nix
-    ./wayland.nix
-    ./fonts.nix
-  ];
+{ pkgs, ... }: {
+  imports = [ ./hyprland.nix ./wayland.nix ./fonts.nix ./rofi.nix ./code.nix ];
 
-  home.packages = with pkgs; [
-  ];
+  home.packages = with pkgs; [ ];
 }

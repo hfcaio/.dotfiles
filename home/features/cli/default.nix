@@ -1,9 +1,5 @@
-{pkgs, ...}: {
-  imports = [
-    ./zsh.nix
-    ./neofetch.nix
-    ./starship.nix
-  ];
+{ pkgs, ... }: {
+  imports = [ ./zsh.nix ./neofetch.nix ./starship.nix ];
 
   home.packages = with pkgs; [
     coreutils
@@ -12,6 +8,6 @@
     zip
     unzip
     wget
-    nixfmt
+    nixfmt-classic
   ];
 }
