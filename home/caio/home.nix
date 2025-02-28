@@ -23,6 +23,7 @@
   # environment.
   home.packages = with pkgs; [
     kitty
+    alacritty
     brave
     vscode
     # # Adds the 'hello' command to your environment. It prints a friendly
@@ -73,7 +74,7 @@
   #
   #  /etc/profiles/per-user/m3tam3re/etc/profile.d/hm-session-vars.sh
   #
-  
+
   #programs.vscode = {
   #  extensions = with pkgs; [
   #    vscode-extensions.catppuccin.catppuccin-vsc
@@ -87,14 +88,10 @@
     font.name = "Fira Code";
     font.size = 12;
     shellIntegration.enableZshIntegration = true;
-    settings = {
-      background_opacity = 0.5;
-    };
+    settings = { background_opacity = 0.5; };
   };
 
-  home.sessionVariables = {
-    EDITOR = "neovim";
-  };
+  home.sessionVariables = { EDITOR = "neovim"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
