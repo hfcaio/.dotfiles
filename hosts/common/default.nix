@@ -1,18 +1,9 @@
 # Common configuration for all hosts
-{
-  pkgs,
-  lib,
-  inputs,
-  outputs,
-  ...
-}: {
-  imports = [
-    ./users
-    inputs.home-manager.nixosModules.home-manager
-  ];
+{ pkgs, lib, inputs, outputs, ... }: {
+  imports = [ ./users inputs.home-manager.nixosModules.home-manager ];
   home-manager = {
     useUserPackages = true;
-    extraSpecialArgs = {inherit inputs outputs;};
+    extraSpecialArgs = { inherit inputs outputs; };
   };
   nixpkgs = {
     # You can add overlays here
@@ -42,20 +33,17 @@
   nix = {
     settings = {
       experimental-features = "nix-command flakes";
-      trusted-users = [
-        "root"
-        "caio"
-      ]; # Set users that are allowed to use the flake command
+      trusted-users =
+        [ "root" "caio" ]; # Set users that are allowed to use the flake command
     };
     gc = {
       automatic = true;
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 10d";
     };
     optimise.automatic = true;
-    registry =
-      (lib.mapAttrs (_: flake: {inherit flake;}))
+    registry = (lib.mapAttrs (_: flake: { inherit flake; }))
       ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-    nixPath = ["/etc/nix/path"];
+    nixPath = [ "/etc/nix/path" ];
   };
   users.defaultUserShell = pkgs.zsh;
 }
