@@ -10,9 +10,4 @@
   home-manager.users.caio =
     import ../../../home/caio/${config.networking.hostName}.nix;
 
-  environment.systemPackages = with pkgs; [
-    libsForQt5.qt5.qtgraphicaleffects
-    xorg.xhost
-    xorg.xauth
-  ];
 }

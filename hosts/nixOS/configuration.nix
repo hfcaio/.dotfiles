@@ -8,6 +8,9 @@
     ./hardware-configuration.nix
   ];
 
+  # Automount USB drives
+  services.udisks2.enable = true;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

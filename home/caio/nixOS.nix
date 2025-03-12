@@ -6,12 +6,14 @@
       zsh.enable = true;
       neofetch.enable = true;
       starship.enable = true;
+      qt.enable = false;
     };
     desktop = {
       hyprland.enable = true;
       wayland.enable = true;
       fonts.enable = true;
       rofi.enable = true;
+      thunar.enable = true;
     };
   };
 }
