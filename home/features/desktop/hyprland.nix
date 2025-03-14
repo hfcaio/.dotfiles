@@ -9,7 +9,7 @@ in {
       enable = true;
       xwayland.enable = true;
       systemd = {
-        enable = true;
+        enable = false;
         # Same as default, but stop graphical-session too
         extraCommands = lib.mkBefore [
           "systemctl --user stop graphical-session.target"
