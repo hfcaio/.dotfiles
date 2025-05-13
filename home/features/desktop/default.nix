@@ -6,6 +6,7 @@
     ./rofi.nix
     ./code.nix
     ./thunar.nix
+    ./rpi_imager.nix
   ];
 
   home.packages = with pkgs; [ xorg.xhost xorg.xauth ];

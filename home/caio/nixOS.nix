@@ -14,6 +14,7 @@
       fonts.enable = true;
       rofi.enable = true;
       thunar.enable = true;
+      rpi_imager.enable = true;
     };
   };
 }
