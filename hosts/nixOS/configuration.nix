@@ -11,6 +11,13 @@
   # Automount USB drives
   services.udisks2.enable = true;
 
+  # services mDNS
+  services.avahi = {
+    enable = true;
+    publish = { enable = true; };
+    nssmdns = { enable = true; };
+  };
+
   # Display manager.
   services.displayManager.ly = { enable = true; };
 
