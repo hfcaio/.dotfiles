@@ -7,6 +7,7 @@
       neofetch.enable = true;
       starship.enable = true;
       qt.enable = false;
+      ssh.enable = true;
     };
     desktop = {
       hyprland.enable = true;
@@ -15,6 +16,7 @@
       rofi.enable = true;
       thunar.enable = true;
       rpi_imager.enable = true;
+      latex.enable = true;
     };
   };
 }

@@ -11,6 +11,9 @@
   # Automount USB drives
   services.udisks2.enable = true;
 
+  # Display manager.
+  services.displayManager.ly = { enable = true; };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

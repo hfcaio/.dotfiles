@@ -23,7 +23,6 @@
   # environment.
   home.packages = with pkgs; [
     kitty
-    alacritty
     brave
     vscode
     # # Adds the 'hello' command to your environment. It prints a friendly

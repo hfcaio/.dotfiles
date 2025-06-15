@@ -7,6 +7,7 @@
     ./code.nix
     ./thunar.nix
     ./rpi_imager.nix
+    ./latex.nix
   ];
 
   home.packages = with pkgs; [ xorg.xhost xorg.xauth ];
