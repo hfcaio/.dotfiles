@@ -14,8 +14,7 @@
   # services mDNS
   services.avahi = {
     enable = true;
-    publish = { enable = true; };
-    nssmdns = { enable = true; };
+    nssmdns4 = true; # Enable mDNS for name resolution
   };
 
   # Display manager.
