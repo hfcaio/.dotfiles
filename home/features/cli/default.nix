@@ -1,5 +1,6 @@
 { pkgs, ... }: {
-  imports = [ ./zsh.nix ./neofetch.nix ./starship.nix ./qt_apps.nix ./ssh.nix ];
+  imports =
+    [ ./zsh.nix ./neofetch.nix ./starship.nix ./qt_apps.nix ./lsp_servers.nix ];
 
   home.packages = with pkgs; [
     coreutils

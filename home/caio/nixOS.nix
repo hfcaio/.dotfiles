@@ -7,7 +7,7 @@
       neofetch.enable = true;
       starship.enable = true;
       qt.enable = false;
-      ssh.enable = true;
+      lsp.enable = true;
     };
     desktop = {
       hyprland.enable = true;

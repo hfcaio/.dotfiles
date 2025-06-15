@@ -6,7 +6,12 @@ in {
     mkEnableOption "download LSP server packages";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ lua-language-server asp-grep ];
+
+    home.packages = with pkgs; [
+      lua-language-server
+      cmake-language-server
+      harper
+    ];
   };
 }
 
