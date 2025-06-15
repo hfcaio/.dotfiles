@@ -8,9 +8,9 @@
     ./thunar.nix
     ./rpi_imager.nix
     ./latex.nix
+    ./ipscan.nix
   ];
 
   home.packages = with pkgs; [ xorg.xhost xorg.xauth ];
   services.udiskie.enable = true;
-  services.udiskie.automount = true;
 }

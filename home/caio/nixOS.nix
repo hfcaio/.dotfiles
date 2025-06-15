@@ -17,6 +17,7 @@
       thunar.enable = true;
       rpi_imager.enable = true;
       latex.enable = true;
+      ipscan.enable = true;
     };
   };
 }
