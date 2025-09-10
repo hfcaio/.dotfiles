@@ -11,6 +11,14 @@
   # Automount USB drives
   services.udisks2.enable = true;
 
+  # add snap
+  services.snap.enable = true;
+
+  # Udev rules
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="2808", ATTR{idProduct}=="6652", MODE="0666" 
+  '';
+
   # services mDNS
   services.avahi = {
     enable = true;
