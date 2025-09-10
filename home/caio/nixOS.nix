@@ -8,6 +8,7 @@
       starship.enable = true;
       qt.enable = false;
       lsp.enable = true;
+      python.enable = true;
     };
     desktop = {
       hyprland.enable = true;

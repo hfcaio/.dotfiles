@@ -18,6 +18,8 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nix-snapd.url = "github:nix-community/nix-snapd";
+    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
 
     disko = {
       url = "github:nix-community/disko";
@@ -43,9 +45,11 @@
       nixosConfigurations = {
         nixOS = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [ 
+          modules = [
             ./hosts/nixOS
             inputs.disko.nixosModules.disko
+            inputs.nix-snapd.nixosModules.default
+            { services.snap.enable = true; }
           ];
         };
       };

@@ -1,6 +1,12 @@
 { pkgs, ... }: {
-  imports =
-    [ ./zsh.nix ./neofetch.nix ./starship.nix ./qt_apps.nix ./lsp_servers.nix ];
+  imports = [
+    ./zsh.nix
+    ./neofetch.nix
+    ./starship.nix
+    ./qt_apps.nix
+    ./lsp_servers.nix
+    ./python.nix
+  ];
 
   home.packages = with pkgs; [
     coreutils
