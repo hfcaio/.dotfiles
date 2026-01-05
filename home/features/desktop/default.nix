@@ -9,6 +9,8 @@
     ./rpi_imager.nix
     ./latex.nix
     ./ipscan.nix
+    ./gcs.nix
+    ./arduino.nix
   ];
 
   home.packages = with pkgs; [ xorg.xhost xorg.xauth ];

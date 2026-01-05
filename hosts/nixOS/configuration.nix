@@ -79,6 +79,8 @@
     #  wget
     neovim
     git
+    docker-compose
+    vscode.fhs
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -97,6 +99,25 @@
   #  settings.PermitRootLogin = "no";
   #  allowSFTP = true;
   #};
+
+  # Enable microfone
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
+  # enable bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
+  # Tornar Mic1 o padrão para captura (input)
+  environment.variables = {
+    PULSE_SOURCE =
+      "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
+  };
 
   programs.hyprland = {
     enable = true;
