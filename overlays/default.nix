@@ -10,6 +10,7 @@
       # example = prev.example.overrideAttrs (oldAttrs: rec {
       # ...
       # });
+
     };
 
   stable-packages = final: _prev: {
