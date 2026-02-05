@@ -5,11 +5,11 @@
   ...
 }:
 with lib; let
-  cfg = config.features.cli.neofetch;
+  cfg = config.features.cli.fetch;
 in {
-  options.features.cli.neofetch.enable = mkEnableOption "enable neofetch";
+  options.features.cli.fetch.enable = mkEnableOption "enable system fetch";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [neofetch];
+    home.packages = with pkgs; [fastfetch];
   };
 }

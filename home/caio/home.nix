@@ -89,7 +89,10 @@
     font.name = "Fira Code";
     font.size = 12;
     shellIntegration.enableZshIntegration = true;
-    settings = { background_opacity = 0.5; };
+    settings = {
+      background_opacity = 0.5;
+      enable_audio_bell = false;
+    };
   };
 
   home.sessionVariables = { EDITOR = "neovim"; };

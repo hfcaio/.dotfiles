@@ -6,6 +6,8 @@
     ./qt_apps.nix
     ./lsp_servers.nix
     ./python.nix
+    ./fzf.nix
+    ./direnv.nix
   ];
 
   home.packages = with pkgs; [

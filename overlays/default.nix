@@ -11,6 +11,8 @@
       # ...
       # });
 
+      # opencv
+      opencv4 = prev.opencv4.override { enableGtk3 = true; };
     };
 
   stable-packages = final: _prev: {

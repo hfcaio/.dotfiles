@@ -4,11 +4,13 @@
   features = {
     cli = {
       zsh.enable = true;
-      neofetch.enable = true;
+      fetch.enable = true;
       starship.enable = true;
       qt.enable = false;
       lsp.enable = true;
       python.enable = true;
+      fzf.enable = true;
+      direnv.enable = true;
     };
     desktop = {
       hyprland.enable = true;

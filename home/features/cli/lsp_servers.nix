@@ -7,11 +7,7 @@ in {
 
   config = mkIf cfg.enable {
 
-    home.packages = with pkgs; [
-      lua-language-server
-      cmake-language-server
-      harper
-    ];
+    home.packages = with pkgs; [ lua-language-server clang-tools pyright nil ];
   };
 }
 
