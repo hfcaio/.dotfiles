@@ -52,6 +52,7 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
+		".clang-format".source = ../features/cli/formatters/.clang-format; 
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''

@@ -12,8 +12,8 @@ in {
         matlab =
           "docker start matlab && docker exec -it matlab /usr/local/MATLAB/R2025b/bin/matlab -nodisplay -nosplash -nodesktop";
       };
-      dotDir = "~/.config/zsh";
       syntaxHighlighting.enable = true;
+      autosuggestion.enable = true;
       oh-my-zsh.enable = true;
       oh-my-zsh.plugins = [ "git" "z" ];
     };

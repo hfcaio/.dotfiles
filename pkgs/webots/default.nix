@@ -36,7 +36,7 @@ let
     };
   };
 
-in pkgs.buildFHSUserEnv {
+in pkgs.buildFHSEnv {
   name = "webots";
 
   targetPkgs = pkgs:
@@ -59,9 +59,9 @@ in pkgs.buildFHSUserEnv {
       libglvnd
 
       # Qt5 e suas dependências X11
-      qt5.full
       qt5.qtbase
-      qt5.qtwebengine
+      qt5.qttools
+      qt5.qtdeclarative
       libxkbcommon
 
       # Bibliotecas XCB

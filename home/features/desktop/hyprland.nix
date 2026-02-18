@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let cfg = config.features.desktop.hyprland;
-in {
+let
+  cfg = config.features.desktop.hyprland;
+in
+{
   options.features.desktop.hyprland.enable = mkEnableOption "hyprland config";
 
   config = mkIf cfg.enable {
@@ -17,9 +24,11 @@ in {
         ];
       };
       settings = {
-        xwayland = { force_zero_scaling = true; };
+        xwayland = {
+          force_zero_scaling = true;
+        };
 
-        exec-once = [ "waybar" "hyprpaper" ];
+        exec-once = [ "hyprpaper" "waybar"];
 
         env = [ "XCURSOR_SIZE,12" ];
 
@@ -33,7 +42,9 @@ in {
           kb_options = "";
           follow_mouse = 1;
 
-          touchpad = { natural_scroll = true; };
+          touchpad = {
+            natural_scroll = true;
+          };
 
           sensitivity = 0;
         };
@@ -84,7 +95,7 @@ in {
 
         master = { };
 
-        gestures = { workspace_swipe = false; };
+        # gestures section removed - workspace_swipe is deprecated in newer Hyprland versions
 
         "$mainMod" = "SUPER";
 
@@ -128,21 +139,23 @@ in {
           "$mainMod, mouse:273, resizewindow"
         ];
 
-        bindel = let
-          pactl = lib.getExe' pkgs.pulseaudio "pactl";
-          brightnessctl = lib.getExe' pkgs.brightnessctl "brightnessctl";
-        in [
-          # Screen brightness level control
-          ",XF86MonBrightnessDown,exec,${brightnessctl} set 5%-"
-          ",XF86MonBrightnessUp,exec,${brightnessctl} set +5%"
-          # Volume control through keyboard
-          ", xf86audioraisevolume, exec, ${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
-          ", xf86audiolowervolume, exec, ${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
-          ", xf86audiomute, exec, ${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
-          # Keyboard brightness level control
-          ", keyboard_brightness_up_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set +5%"
-          ", keyboard_brightness_down_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set -5%"
-        ];
+        bindel =
+          let
+            pactl = lib.getExe' pkgs.pulseaudio "pactl";
+            brightnessctl = lib.getExe' pkgs.brightnessctl "brightnessctl";
+          in
+          [
+            # Screen brightness level control
+            ",XF86MonBrightnessDown,exec,${brightnessctl} set 5%-"
+            ",XF86MonBrightnessUp,exec,${brightnessctl} set +5%"
+            # Volume control through keyboard
+            ", xf86audioraisevolume, exec, ${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
+            ", xf86audiolowervolume, exec, ${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
+            ", xf86audiomute, exec, ${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
+            # Keyboard brightness level control
+            ", keyboard_brightness_up_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set +5%"
+            ", keyboard_brightness_down_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set -5%"
+          ];
 
       };
     };
@@ -150,11 +163,13 @@ in {
     services.hyprpaper = {
       enable = true;
       settings = {
-        preload = [
-          "/home/caio/git_projects/.dotfiles/home/features/desktop/images/wallpapersden.com_depressed-alone_3840x2743.jpg"
-        ];
+        # New hyprpaper v0.8.0 syntax - wallpapers are now defined as anonymous categories
         wallpaper = [
-          ",/home/caio/git_projects/.dotfiles/home/features/desktop/images/wallpapersden.com_depressed-alone_3840x2743.jpg"
+          {
+            monitor = ""; # Empty monitor = fallback for all monitors
+            path = "/home/caio/git_projects/.dotfiles/home/features/desktop/images/wallpapersden.com_depressed-alone_3840x2743.jpg";
+            fit_mode = "cover"; # Options: cover, contain, fill, tile, center
+          }
         ];
       };
     };

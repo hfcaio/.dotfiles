@@ -1,13 +1,18 @@
 {
-  imports = [ ../common ../features/cli ../features/desktop ./home.nix ];
+  imports = [
+    ../common
+    ../features/cli
+    ../features/desktop
+    ./home.nix
+  ];
 
   features = {
     cli = {
       zsh.enable = true;
       fetch.enable = true;
       starship.enable = true;
-      qt.enable = false;
       lsp.enable = true;
+      nvim.enable = true;
       python.enable = true;
       fzf.enable = true;
       direnv.enable = true;

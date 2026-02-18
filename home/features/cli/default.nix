@@ -1,12 +1,13 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./zsh.nix
     ./neofetch.nix
     ./starship.nix
-    ./qt_apps.nix
     ./lsp_servers.nix
     ./python.nix
     ./fzf.nix
+    ./nvim.nix
     ./direnv.nix
   ];
 
@@ -17,6 +18,6 @@
     zip
     unzip
     wget
-    nixfmt-classic
+    nixfmt
   ];
 }

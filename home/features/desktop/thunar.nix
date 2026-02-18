@@ -5,6 +5,6 @@ in {
   options.features.desktop.thunar.enable =
     mkEnableOption "install thunar file manager";
 
-  config = mkIf cfg.enable { home.packages = with pkgs; [ xfce.thunar ]; };
+  config = mkIf cfg.enable { home.packages = with pkgs; [ thunar ]; };
 
 }

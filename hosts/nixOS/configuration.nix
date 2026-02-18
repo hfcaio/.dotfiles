@@ -1,7 +1,8 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     # Include the results of the hardware scan.
     ./disko-config.nix
@@ -26,7 +27,9 @@
   };
 
   # Display manager.
-  services.displayManager.ly = { enable = true; };
+  services.displayManager.ly = {
+    enable = true;
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -43,9 +46,9 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/Sao_Paulo";
+  time.timeZone = "Europe/Lisbon";
 
-  # Enable docker 
+  # Enable docker
   virtualisation.docker.enable = true;
 
   # Select internationalisation properties.
@@ -79,8 +82,8 @@
     #  wget
     neovim
     git
+		gdb
     docker-compose
-    vscode.fhs
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -115,8 +118,7 @@
 
   # Tornar Mic1 o padrão para captura (input)
   environment.variables = {
-    PULSE_SOURCE =
-      "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
+    PULSE_SOURCE = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
   };
 
   programs.hyprland = {
@@ -125,6 +127,10 @@
   };
 
   programs.zsh.enable = true;
+		
+	# coredump
+	systemd.coredump.enable = false;
+	boot.kernel.sysctl."kernel.core_pattern" = "core";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

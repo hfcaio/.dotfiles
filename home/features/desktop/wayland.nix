@@ -9,7 +9,7 @@ in {
     programs.waybar = {
       enable = true;
       style = ./styles/waybar.css;
-      systemd.enable = true;
+      systemd.enable = false;
       settings = {
         mainBar = {
           layer = "top";
