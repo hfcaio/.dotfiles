@@ -22,6 +22,7 @@ in
         telescope-nvim
         blink-cmp
         harpoon
+				yazi-nvim
       ];
 
       extraLuaConfig = builtins.readFile ./nvim/init.lua;

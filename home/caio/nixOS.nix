@@ -5,6 +5,8 @@
     ../features/desktop
     ./home.nix
   ];
+		
+	
 
   features = {
     cli = {
@@ -16,15 +18,15 @@
       python.enable = true;
       fzf.enable = true;
       direnv.enable = true;
+			yazi.enable = true;
     };
     desktop = {
       hyprland.enable = true;
-      wayland.enable = true;
       fonts.enable = true;
       rofi.enable = true;
-      thunar.enable = true;
+      thunar.enable = false;
       rpi_imager.enable = true;
-      latex.enable = true;
+      latex.enable = false;
       ipscan.enable = true;
       gcs.enable = true;
       arduino.enable = true;

@@ -12,6 +12,7 @@ vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- Leader key
 vim.g.mapleader = " "
@@ -52,6 +53,23 @@ vim.keymap.set("n", "K", function()
 	end
 end, { desc = "Hover or show diagnostics" })
 
+-- yazi (file manager)
+local yazi = require("yazi")
+
+vim.keymap.set('n', '<leader>f', function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local is_directory = vim.fn.isdirectory(bufname) == 1
+	yazi.yazi()
+end, { desc = 'Open file manager' })
+
+vim.g.loaded_netrwPlugin = 1
+vim.api.nvim_create_autocmd("UIEnter", {
+  callback = function()
+    yazi.setup({
+      open_for_directories = true,
+    })
+  end,
+})
 
 -- Harpoon
 local harpoon_mark = require("harpoon.mark")

@@ -12,8 +12,12 @@
   # Automount USB drives
   services.udisks2.enable = true;
 
-  # add snap
-  services.snap.enable = true;
+  # Config stylix for color management
+  # [TODO] change this to home manager
+  stylix = {
+    enable = true;
+    image = ../../home/features/desktop/images/wallpapersden.com_depressed-alone_3840x2743.jpg;
+  };
 
   # Udev rules
   services.udev.extraRules = ''
@@ -82,7 +86,7 @@
     #  wget
     neovim
     git
-		gdb
+    gdb
     docker-compose
   ];
 
@@ -127,16 +131,19 @@
   };
 
   programs.zsh.enable = true;
-		
-	# coredump
-	systemd.coredump.enable = false;
-	boot.kernel.sysctl."kernel.core_pattern" = "core";
+
+  # coredump
+  systemd.coredump.enable = false;
+  boot.kernel.sysctl."kernel.core_pattern" = "core";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ "docker0" ]; # Confiar na interface Docker
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

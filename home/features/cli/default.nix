@@ -9,6 +9,7 @@
     ./fzf.nix
     ./nvim.nix
     ./direnv.nix
+		./yazi.nix
   ];
 
   home.packages = with pkgs; [

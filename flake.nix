@@ -11,23 +11,32 @@
   '';
 
   inputs = {
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
-    nix-snapd.url = "github:nix-community/nix-snapd";
-    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = { self, home-manager, nixpkgs, ... }@inputs:
+  outputs =
+    {
+      self,
+      home-manager,
+      nixpkgs,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       systems = [
@@ -38,9 +47,9 @@
         "x86_64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
-    in {
-      packages =
-        forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+    in
+    {
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       overlays = import ./overlays { inherit inputs; };
       nixosConfigurations = {
         nixOS = nixpkgs.lib.nixosSystem {
@@ -48,8 +57,7 @@
           modules = [
             ./hosts/nixOS
             inputs.disko.nixosModules.disko
-            inputs.nix-snapd.nixosModules.default
-            { services.snap.enable = true; }
+            inputs.stylix.nixosModules.stylix
           ];
         };
       };
@@ -57,7 +65,9 @@
         "caio@nixOS" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/caio/nixOS.nix ];
+          modules = [
+            ./home/caio/nixOS.nix
+          ];
         };
       };
     };

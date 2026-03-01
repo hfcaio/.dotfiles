@@ -1,0 +1,10 @@
+@import "default"
+
+window {
+    width: 600px;
+    border: 2px solid;
+    border-color: #bb9af7;
+    border-radius: 12px;
+    background-color: #1a1b26;
+}
+

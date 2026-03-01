@@ -7,54 +7,68 @@
 with lib;
 let
   cfg = config.features.desktop.hyprland;
+  wallpaper = ./images/wallpapersden.com_depressed-alone_3840x2743.jpg;
 in
 {
   options.features.desktop.hyprland.enable = mkEnableOption "hyprland config";
 
   config = mkIf cfg.enable {
+
+    # ── Packages ────────────────────────────────────────────────────────────
+    home.packages = with pkgs; [
+      brightnessctl
+      pulseaudio
+      hyprshot
+      hypridle
+      hyprlock
+      hyprpaper
+      pamixer        
+    ];
+
+    # ── Wallpaper config ────────────────────────────────────────────────────
+    xdg.configFile."hypr/hyprpaper.conf".text = ''
+      preload = ${wallpaper}
+      wallpaper = ,${wallpaper}
+      splash = false
+    '';
+
+    # ── Hyprland ─────────────────────────────────────────────────────────────
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
-      systemd = {
-        enable = false;
-        # Same as default, but stop graphical-session too
-        extraCommands = lib.mkBefore [
-          "systemctl --user stop graphical-session.target"
-          "systemctl --user start hyprland-session.target"
-        ];
-      };
+      systemd.enable = false;
+
       settings = {
-        xwayland = {
-          force_zero_scaling = true;
-        };
+        xwayland.force_zero_scaling = true;
 
-        exec-once = [ "hyprpaper" "waybar"];
+        exec-once = [
+          "hyprpaper"
+          "waybar"
+          "hypridle"
+        ];
 
-        env = [ "XCURSOR_SIZE,12" ];
+        env = [
+          "XCURSOR_SIZE,12"
+          "LIBVA_DRIVER_NAME,iHD"        # Intel Arc hardware acceleration
+          "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
+        ];
 
-        monitor = ",1920x1080,auto,1 ";
+        monitor = ",1920x1080,auto,1";
 
         input = {
           kb_layout = "br";
-          kb_variant = "";
           kb_model = "abnt2";
-          kb_rules = "";
-          kb_options = "";
           follow_mouse = 1;
-
-          touchpad = {
-            natural_scroll = true;
-          };
-
           sensitivity = 0;
+          touchpad.natural_scroll = true;
         };
 
         general = {
           gaps_in = 5;
           gaps_out = 20;
           border_size = 2;
-          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
+          #"col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          #"col.inactive_border" = "rgba(595959aa)";
           layout = "dwindle";
           allow_tearing = false;
         };
@@ -65,9 +79,8 @@ in
             enabled = true;
             range = 4;
             render_power = 3;
-            color = "rgba(1a1a1aee)";
+          #  color = "rgba(1a1a1aee)";
           };
-
           blur = {
             enabled = true;
             size = 3;
@@ -93,22 +106,19 @@ in
           preserve_split = true;
         };
 
-        master = { };
-
-        # gestures section removed - workspace_swipe is deprecated in newer Hyprland versions
-
         "$mainMod" = "SUPER";
 
         bind = [
           "$mainMod, T, exec, kitty"
-          "$mainMod, Q, killactive, "
-          "$mainMod, M, exit, "
-          "$mainMod, B, exec, brave "
-          "$mainMod, F, exec, thunar "
-          "$mainMod, V, togglefloating, "
-          "$mainMod, R, exec, rofi -show drun -show-icons "
-          "$mainMod, S, exec, hyprshot -m region -o /home/caio/screenshot "
-          "$mainMod, J, togglesplit, " # dwindle
+          "$mainMod, Q, killactive"
+          "$mainMod, M, exit"
+          "$mainMod, B, exec, brave"
+          "$mainMod, F, exec, kitty -e yazi"
+          "$mainMod, V, togglefloating"
+          "$mainMod, R, exec, rofi -show drun -show-icons"
+          "$mainMod, S, exec, hyprshot -m region -o ~/screenshots"
+          "$mainMod, J, togglesplit"
+          # Workspaces
           "$mainMod, 1, workspace, 1"
           "$mainMod, 2, workspace, 2"
           "$mainMod, 3, workspace, 3"
@@ -119,6 +129,7 @@ in
           "$mainMod, 8, workspace, 8"
           "$mainMod, 9, workspace, 9"
           "$mainMod, 0, workspace, 10"
+          # Move to workspace
           "$mainMod SHIFT, 1, movetoworkspace, 1"
           "$mainMod SHIFT, 2, movetoworkspace, 2"
           "$mainMod SHIFT, 3, movetoworkspace, 3"
@@ -131,7 +142,6 @@ in
           "$mainMod SHIFT, 0, movetoworkspace, 10"
           "$mainMod, mouse_down, workspace, e+1"
           "$mainMod, mouse_up, workspace, e-1"
-
         ];
 
         bindm = [
@@ -145,33 +155,112 @@ in
             brightnessctl = lib.getExe' pkgs.brightnessctl "brightnessctl";
           in
           [
-            # Screen brightness level control
-            ",XF86MonBrightnessDown,exec,${brightnessctl} set 5%-"
-            ",XF86MonBrightnessUp,exec,${brightnessctl} set +5%"
-            # Volume control through keyboard
-            ", xf86audioraisevolume, exec, ${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
-            ", xf86audiolowervolume, exec, ${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
-            ", xf86audiomute, exec, ${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
-            # Keyboard brightness level control
-            ", keyboard_brightness_up_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set +5%"
-            ", keyboard_brightness_down_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set -5%"
+            ",XF86MonBrightnessDown, exec, ${brightnessctl} set 5%-"
+            ",XF86MonBrightnessUp,   exec, ${brightnessctl} set +5%"
+            ",xf86audioraisevolume,  exec, ${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
+            ",xf86audiolowervolume,  exec, ${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
+            ",xf86audiomute,         exec, ${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
+            ",keyboard_brightness_up_shortcut,   exec, ${brightnessctl} -d *::kbd_backlight set +5%"
+            ",keyboard_brightness_down_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set -5%"
           ];
-
       };
     };
 
-    services.hyprpaper = {
+    # ── Waybar ───────────────────────────────────────────────────────────────
+		stylix.targets.waybar.enable = false;
+    programs.waybar = {
       enable = true;
+      style = ./styles/waybar.css;
+      systemd.enable = false;
       settings = {
-        # New hyprpaper v0.8.0 syntax - wallpapers are now defined as anonymous categories
-        wallpaper = [
-          {
-            monitor = ""; # Empty monitor = fallback for all monitors
-            path = "/home/caio/git_projects/.dotfiles/home/features/desktop/images/wallpapersden.com_depressed-alone_3840x2743.jpg";
-            fit_mode = "cover"; # Options: cover, contain, fill, tile, center
-          }
-        ];
+        mainBar = {
+          layer = "top";
+          position = "top";
+          modules-left = [ "custom/logo" "hyprland/workspaces" ];
+          modules-center = [ "clock" ];
+          modules-right = [ "backlight" "pulseaudio" "network" "battery" ];
+
+          battery = {
+            format = "{capacity}% {icon}";
+            "format-icons" = {
+              "charging" = [ "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
+              "default" = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+            };
+            "format-full" = "󰁹 ";
+            interval = 1;
+            states = {
+              warning = 20;
+              critical = 10;
+            };
+            tooltip = false;
+          };
+
+          backlight = {
+            device = "intel_backlight";
+            format = "{percent}% {icon}";
+            format-icons = [ "" "" ];
+          };
+
+          network = {
+            format-wifi = "{essid} ({signalStrength}%) ";
+            format-ethernet = "{ipaddr}/{cidr}";
+            tooltip-format = "{ifname} via {gwaddr}";
+            format-linked = "{ifname} (No IP)";
+            format-disconnected = "Disconnected ⚠";
+            format-alt = "{ifname}: {ipaddr}/{cidr}";
+          };
+
+          pulseaudio = {
+            format = "{volume}% {icon}";
+            format-bluetooth = "󰂰";
+            nospacing = 1;
+            tooltip-format = "Volume : {volume}%";
+            format-muted = "󰝟";
+            format-icons = {
+              headphone = "";
+              default = [ "󰖀" "󰕾" "" ];
+            };
+            on-click = "pamixer -t";
+            scroll-step = 1;
+          };
+
+          clock = {
+            "tooltip-format" = "<tt>{calendar}</tt>";
+            "format-alt" = "  {:%a, %d %b %Y}";
+            format = "󰥔  {:%I:%M %p}";
+          };
+
+          "custom/logo" = {
+            format = "  ";
+            tooltip = false;
+          };
+        };
       };
     };
+
+    # ── Hypridle ─────────────────────────────────────────────────────────────
+    # Screen dims after 4min, locks after 5min, suspends after 10min
+    xdg.configFile."hypr/hypridle.conf".text = ''
+      general {
+        lock_cmd = hyprlock
+        before_sleep_cmd = hyprlock
+      }
+
+      listener {
+        timeout = 240
+        on-timeout = brightnessctl set 4%
+        on-resume = brightnessctl set 20%
+      }
+
+      listener {
+        timeout = 300
+        on-timeout = hyprlock
+      }
+
+      listener {
+        timeout = 600
+        on-timeout = systemctl suspend
+      }
+    '';
   };
 }
