@@ -24,7 +24,7 @@
     };
 
     stylix = {
-      url = "github:nix-community/stylix";
+      url = "github:nix-community/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -35,6 +35,7 @@
       self,
       home-manager,
       nixpkgs,
+			stylix,
       ...
     }@inputs:
     let
@@ -57,7 +58,6 @@
           modules = [
             ./hosts/nixOS
             inputs.disko.nixosModules.disko
-            inputs.stylix.nixosModules.stylix
           ];
         };
       };
@@ -66,6 +66,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
+            stylix.homeModules.stylix
             ./home/caio/nixOS.nix
           ];
         };

@@ -84,7 +84,6 @@
   #  ];
   #};
 
-	stylix.targets.kitty.enable = false;
   programs.kitty = {
     enable = true;
     font.name = "Fira Code";

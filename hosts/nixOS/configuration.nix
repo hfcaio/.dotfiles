@@ -12,13 +12,6 @@
   # Automount USB drives
   services.udisks2.enable = true;
 
-  # Config stylix for color management
-  # [TODO] change this to home manager
-  stylix = {
-    enable = true;
-    image = ../../home/features/desktop/images/wallpapersden.com_depressed-alone_3840x2743.jpg;
-  };
-
   # Udev rules
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="2808", ATTR{idProduct}=="6652", MODE="0666" 
