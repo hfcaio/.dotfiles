@@ -1,4 +1,6 @@
 {
+	
+
   imports = [
     ../common
     ../features/cli
@@ -7,6 +9,11 @@
   ];
 		
 	
+	stylix.enable = true;
+	stylix.image = ../features/desktop/images/117794241_p2.jpg;
+	stylix.targets.waybar.enable = false;
+	stylix.targets.kitty.enable = false;
+
 
   features = {
     cli = {
