@@ -113,7 +113,7 @@ in
           "$mainMod, Q, killactive"
           "$mainMod, M, exit"
           "$mainMod, B, exec, brave"
-          "$mainMod, F, exec, thunar"
+          "$mainMod, F, exec, nautilus"
           "$mainMod, V, togglefloating"
           "$mainMod, R, exec, rofi -show drun -show-icons"
           "$mainMod, S, exec, hyprshot -m region -o ~/screenshots"
@@ -167,7 +167,6 @@ in
     };
 
     # ── Waybar ───────────────────────────────────────────────────────────────
-		stylix.targets.waybar.enable = false;
     programs.waybar = {
       enable = true;
       style = ./styles/waybar.css;

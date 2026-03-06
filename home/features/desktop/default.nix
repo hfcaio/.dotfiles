@@ -5,6 +5,7 @@
     ./rofi.nix
     ./code.nix
     ./thunar.nix
+		./nautilus.nix
     ./rpi_imager.nix
     ./latex.nix
     ./ipscan.nix
