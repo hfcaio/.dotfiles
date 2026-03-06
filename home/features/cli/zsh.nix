@@ -1,6 +1,8 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.features.cli.zsh;
+let 
+	cfg = config.features.cli.zsh;
+	scripts_dir = "/home/caio/git_projects/.dotfiles/scripts";
 in {
   options.features.cli.zsh.enable =
     mkEnableOption "enable extended zsh configuration";
@@ -9,6 +11,7 @@ in {
     programs.zsh = {
       enable = true;
       shellAliases = {
+				blt = "${scripts_dir}/blt";
         matlab =
           "docker start matlab && docker exec -it matlab /usr/local/MATLAB/R2025b/bin/matlab -nodisplay -nosplash -nodesktop";
       };

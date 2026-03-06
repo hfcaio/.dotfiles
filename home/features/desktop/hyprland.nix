@@ -7,7 +7,7 @@
 with lib;
 let
   cfg = config.features.desktop.hyprland;
-  wallpaper = ./images/wallpapersden.com_depressed-alone_3840x2743.jpg;
+  wallpaper = ./images/117794241_p2.jpg;
 in
 {
   options.features.desktop.hyprland.enable = mkEnableOption "hyprland config";
@@ -113,7 +113,7 @@ in
           "$mainMod, Q, killactive"
           "$mainMod, M, exit"
           "$mainMod, B, exec, brave"
-          "$mainMod, F, exec, kitty -e yazi"
+          "$mainMod, F, exec, thunar"
           "$mainMod, V, togglefloating"
           "$mainMod, R, exec, rofi -show drun -show-icons"
           "$mainMod, S, exec, hyprshot -m region -o ~/screenshots"

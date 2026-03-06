@@ -17,8 +17,17 @@ vim.opt.relativenumber = true
 -- Leader key
 vim.g.mapleader = " "
 
+-- Move lines up and down
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move line up' })
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
+
 -- setting color theme
 vim.cmd.colorscheme("catppuccin-mocha")
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- Keymaps
 vim.keymap.set('n', '<Tab>', '>>', { desc = 'Indent line' })
@@ -56,7 +65,7 @@ end, { desc = "Hover or show diagnostics" })
 -- yazi (file manager)
 local yazi = require("yazi")
 
-vim.keymap.set('n', '<leader>f', function()
+vim.keymap.set('n', '<leader>y', function()
   local bufname = vim.api.nvim_buf_get_name(0)
   local is_directory = vim.fn.isdirectory(bufname) == 1
 	yazi.yazi()

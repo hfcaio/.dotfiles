@@ -18,13 +18,13 @@
       python.enable = true;
       fzf.enable = true;
       direnv.enable = true;
-			yazi.enable = true;
+			yazi.enable = false;
     };
     desktop = {
       hyprland.enable = true;
       fonts.enable = true;
       rofi.enable = true;
-      thunar.enable = false;
+      thunar.enable = true;
       rpi_imager.enable = true;
       latex.enable = false;
       ipscan.enable = true;

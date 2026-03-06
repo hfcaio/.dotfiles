@@ -12,6 +12,8 @@ in
   options.features.cli.nvim.enable = mkEnableOption "install neovim plugins and configure neovim";
 
   config = mkIf cfg.enable {
+		stylix.targets.neovim.enable = false;
+    home.packages = with pkgs; [yazi];
     programs.neovim = {
       enable = true;
       vimAlias = true;
@@ -22,8 +24,8 @@ in
         telescope-nvim
         blink-cmp
         harpoon
-				yazi-nvim
-      ];
+      	yazi-nvim
+			];
 
       extraLuaConfig = builtins.readFile ./nvim/init.lua;
     };
