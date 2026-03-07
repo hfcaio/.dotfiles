@@ -3,6 +3,7 @@
     ./hyprland.nix
     ./fonts.nix
     ./rofi.nix
+    ./rofi_pw_menu.nix
     ./code.nix
     ./thunar.nix
 		./nautilus.nix

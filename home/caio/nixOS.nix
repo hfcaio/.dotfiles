@@ -1,5 +1,6 @@
+
+{pkgs, ...}:
 {
-	
 
   imports = [
     ../common
@@ -7,13 +8,15 @@
     ../features/desktop
     ./home.nix
   ];
-		
-	
-	stylix.enable = true;
-	stylix.image = ../features/desktop/images/117794241_p2.jpg;
-	stylix.targets.waybar.enable = false;
-	stylix.targets.kitty.enable = false;
 
+  stylix = {
+    enable = true;
+    image = ../features/desktop/images/117794241_p2.jpg;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    targets.waybar.enable = false;
+    targets.kitty.enable = false;
+    targets.rofi.enable = false;
+  };
 
   features = {
     cli = {
@@ -25,13 +28,15 @@
       python.enable = true;
       fzf.enable = true;
       direnv.enable = true;
-			yazi.enable = false;
+      yazi.enable = false;
     };
     desktop = {
       hyprland.enable = true;
       fonts.enable = true;
       rofi.enable = true;
-      thunar.enable = true;
+      rofi-powermenu.enable = true;
+      thunar.enable = false;
+			nautilus.enable = true;
       rpi_imager.enable = true;
       latex.enable = false;
       ipscan.enable = true;

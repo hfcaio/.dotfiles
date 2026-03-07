@@ -8,13 +8,9 @@ let
       pip
       setuptools
       virtualenv
-      jupyterlab # interface moderna
-      notebook # ainda útil em alguns casos
-      ipykernel
       numpy
       matplotlib
-      cvxpy
-      opencv4 # opcional
+      opencv4 
     ]);
 in {
   options.features.cli.python = {

@@ -114,6 +114,7 @@ in
           "$mainMod, M, exit"
           "$mainMod, B, exec, brave"
           "$mainMod, F, exec, nautilus"
+          "$mainMod, P, exec, ~/.config/rofi/powermenu.sh"
           "$mainMod, V, togglefloating"
           "$mainMod, R, exec, rofi -show drun -show-icons"
           "$mainMod, S, exec, hyprshot -m region -o ~/screenshots"

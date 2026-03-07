@@ -16,6 +16,20 @@
     ];
     packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
   };
- 	#home-manager.users.caio = import ../../../home/caio/${config.networking.hostName}.nix;
+
+  #enable stylix
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+  };
+
+  home-manager = {
+    useUserPackages = true;
+    extraSpecialArgs = {
+      inherit inputs;
+      stylix-config = config.stylix;
+    };
+    users.caio = import ../../../home/caio/${config.networking.hostName}.nix;
+  };
 
 }
