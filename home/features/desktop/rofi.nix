@@ -81,6 +81,9 @@ in
             urgent-foreground = mkLiteral "#${colors.base00}";
             active-background = mkLiteral "#${colors.base0B}";
             active-foreground = mkLiteral "#${colors.base00}";
+            background-window = mkLiteral "rgba(0, 0, 0, 40%)";
+            background-normal = mkLiteral "rgba(0, 0, 0, 60%)";
+            background-selected = mkLiteral "rgba(255, 255, 255, 20%)";
             selected-normal-background = mkLiteral "#${colors.base0D}";
             selected-normal-foreground = mkLiteral "#${colors.base00}";
             selected-urgent-background = mkLiteral "#${colors.base0B}";
@@ -96,7 +99,6 @@ in
           };
 
           "window" = {
-            transparency = mkLiteral "\"real\"";
             location = mkLiteral "center";
             anchor = mkLiteral "center";
             fullscreen = mkLiteral "false";

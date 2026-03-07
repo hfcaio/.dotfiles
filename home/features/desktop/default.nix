@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./hyprland.nix
     ./fonts.nix
@@ -6,7 +7,7 @@
     ./rofi_pw_menu.nix
     ./code.nix
     ./thunar.nix
-		./nautilus.nix
+    ./nautilus.nix
     ./rpi_imager.nix
     ./latex.nix
     ./ipscan.nix
@@ -14,6 +15,10 @@
     ./arduino.nix
   ];
 
-  home.packages = with pkgs; [ xorg.xhost xorg.xauth ];
+  home.packages = with pkgs; [
+    xorg.xhost
+    xorg.xauth
+  ];
   services.udiskie.enable = true;
+
 }

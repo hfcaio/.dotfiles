@@ -22,7 +22,7 @@ in
       hypridle
       hyprlock
       hyprpaper
-      pamixer        
+      pamixer
     ];
 
     # ── Wallpaper config ────────────────────────────────────────────────────
@@ -49,7 +49,7 @@ in
 
         env = [
           "XCURSOR_SIZE,12"
-          "LIBVA_DRIVER_NAME,iHD"        # Intel Arc hardware acceleration
+          "LIBVA_DRIVER_NAME,iHD" # Intel Arc hardware acceleration
           "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
         ];
 
@@ -79,13 +79,17 @@ in
             enabled = true;
             range = 4;
             render_power = 3;
-          #  color = "rgba(1a1a1aee)";
+            #  color = "rgba(1a1a1aee)";
           };
           blur = {
             enabled = true;
             size = 3;
             passes = 1;
+            vibrancy = 0.1696;
           };
+          active_opacity = 0.95;
+          inactive_opacity = 0.85;
+          fullscreen_opacity = 1.0;
         };
 
         animations = {
@@ -176,15 +180,45 @@ in
         mainBar = {
           layer = "top";
           position = "top";
-          modules-left = [ "custom/logo" "hyprland/workspaces" ];
+          modules-left = [
+            "custom/logo"
+            "hyprland/workspaces"
+          ];
           modules-center = [ "clock" ];
-          modules-right = [ "backlight" "pulseaudio" "network" "battery" ];
+          modules-right = [
+            "backlight"
+            "pulseaudio"
+            "network"
+            "battery"
+          ];
 
           battery = {
             format = "{capacity}% {icon}";
             "format-icons" = {
-              "charging" = [ "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
-              "default" = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+              "charging" = [
+                "󰢜"
+                "󰂆"
+                "󰂇"
+                "󰂈"
+                "󰢝"
+                "󰂉"
+                "󰢞"
+                "󰂊"
+                "󰂋"
+                "󰂅"
+              ];
+              "default" = [
+                "󰁺"
+                "󰁻"
+                "󰁼"
+                "󰁽"
+                "󰁾"
+                "󰁿"
+                "󰂀"
+                "󰂁"
+                "󰂂"
+                "󰁹"
+              ];
             };
             "format-full" = "󰁹 ";
             interval = 1;
@@ -198,7 +232,10 @@ in
           backlight = {
             device = "intel_backlight";
             format = "{percent}% {icon}";
-            format-icons = [ "" "" ];
+            format-icons = [
+              ""
+              ""
+            ];
           };
 
           network = {
@@ -218,7 +255,11 @@ in
             format-muted = "󰝟";
             format-icons = {
               headphone = "";
-              default = [ "󰖀" "󰕾" "" ];
+              default = [
+                "󰖀"
+                "󰕾"
+                ""
+              ];
             };
             on-click = "pamixer -t";
             scroll-step = 1;
