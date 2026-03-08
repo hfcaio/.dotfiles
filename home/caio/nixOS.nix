@@ -15,7 +15,6 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     targets.waybar.enable = false;
     targets.kitty.enable = false;
-    targets.rofi.enable = false;
   };
 
   features = {

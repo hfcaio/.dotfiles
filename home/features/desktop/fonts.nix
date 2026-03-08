@@ -7,8 +7,6 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      fira-code
-      fira-code-symbols
       nerd-fonts.fira-code
     ];
   };
