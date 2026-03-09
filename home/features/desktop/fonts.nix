@@ -6,7 +6,10 @@ in {
     mkEnableOption "install additional fonts for desktop apps";
 
   config = mkIf cfg.enable {
+    fonts.fontconfig.enable = true;
+    
     home.packages = with pkgs; [
+      fira-code
       nerd-fonts.fira-code
     ];
   };
