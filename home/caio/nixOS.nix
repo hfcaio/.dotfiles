@@ -14,7 +14,6 @@
     image = ../features/desktop/images/117794241_p2.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     targets.waybar.enable = false;
-    targets.kitty.enable = false;
   };
 
   features = {

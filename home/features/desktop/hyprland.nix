@@ -16,6 +16,7 @@ in
 
     # ── Packages ────────────────────────────────────────────────────────────
     home.packages = with pkgs; [
+      wl-clipboard
       brightnessctl
       pulseaudio
       hyprshot
@@ -113,7 +114,7 @@ in
         "$mainMod" = "SUPER";
 
         bind = [
-          "$mainMod, T, exec, kitty"
+          "$mainMod, T, exec, alacritty"
           "$mainMod, Q, killactive"
           "$mainMod, M, exit"
           "$mainMod, B, exec, brave"

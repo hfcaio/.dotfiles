@@ -1,9 +1,9 @@
 vim.opt.mouse = "a"
 vim.opt.swapfile = false
 vim.opt.winborder = "rounded"
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.showtabline = 2
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.showtabline = 4
 vim.opt.signcolumn = "yes"
 vim.opt.wrap = false
 vim.opt.cursorcolumn = false
@@ -24,10 +24,10 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' 
 vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
 -- setting color theme
-vim.cmd.colorscheme("catppuccin-mocha")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- vim.cmd.colorscheme("catppuccin-mocha")
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- Keymaps
 vim.keymap.set('n', '<Tab>', '>>', { desc = 'Indent line' })
@@ -66,18 +66,18 @@ end, { desc = "Hover or show diagnostics" })
 local yazi = require("yazi")
 
 vim.keymap.set('n', '<leader>y', function()
-  local bufname = vim.api.nvim_buf_get_name(0)
-  local is_directory = vim.fn.isdirectory(bufname) == 1
+	local bufname = vim.api.nvim_buf_get_name(0)
+	local is_directory = vim.fn.isdirectory(bufname) == 1
 	yazi.yazi()
 end, { desc = 'Open file manager' })
 
 vim.g.loaded_netrwPlugin = 1
 vim.api.nvim_create_autocmd("UIEnter", {
-  callback = function()
-    yazi.setup({
-      open_for_directories = true,
-    })
-  end,
+	callback = function()
+		yazi.setup({
+			open_for_directories = true,
+		})
+	end,
 })
 
 -- Harpoon
