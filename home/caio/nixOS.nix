@@ -1,5 +1,4 @@
-
-{pkgs, ...}:
+{ pkgs, ... }:
 {
 
   imports = [
@@ -31,10 +30,11 @@
     desktop = {
       hyprland.enable = true;
       fonts.enable = true;
+	  blender.enable = true;
       rofi.enable = true;
       rofi-powermenu.enable = true;
       thunar.enable = false;
-			nautilus.enable = true;
+      nautilus.enable = true;
       rpi_imager.enable = true;
       latex.enable = false;
       ipscan.enable = true;

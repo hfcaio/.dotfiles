@@ -5,6 +5,7 @@
     ./fonts.nix
     ./rofi.nix
     ./rofi_pw_menu.nix
+	./blender.nix
     ./code.nix
     ./thunar.nix
     ./nautilus.nix
