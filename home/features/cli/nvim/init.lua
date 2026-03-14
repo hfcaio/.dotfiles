@@ -1,9 +1,9 @@
 vim.opt.mouse = "a"
 vim.opt.swapfile = false
 vim.opt.winborder = "rounded"
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.showtabline = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.showtabline = 2
 vim.opt.signcolumn = "yes"
 vim.opt.wrap = false
 vim.opt.cursorcolumn = false
@@ -13,6 +13,9 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.colorcolumn = "100"
+vim.opt.textwidth = 100
+vim.opt.formatoptions:append("c")
 
 -- Leader key
 vim.g.mapleader = " "
@@ -45,7 +48,7 @@ vim.keymap.set('n', '<leader>t', function()
 	vim.cmd('startinsert')
 end, { desc = 'Open terminal' })
 
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 
 -- Autoformat with Ctrl + t
@@ -96,6 +99,22 @@ vim.keymap.set('n', '<leader>4', function() harpoon_ui.nav_file(4) end)
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+
+-- lualine
+require('lualine').setup({
+  options = {
+    theme = 'auto',
+    icons_enabled = true,
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_c = { 'filename' },
+    lualine_x = { 'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
+  },
+})
 
 -- LSP and cmp
 local blink = require('blink.cmp')
@@ -176,6 +195,15 @@ vim.lsp.config('nil_ls', {
 		}
 	}
 })
+-- Typst LSP
+vim.lsp.config('tinymist', {
+	cmd = { 'tinymist' },
+	filetypes = { 'typst' },
+	capabilities = capabilities,
+	init_options = {
+		formatterMode = "typstyle", -- ou "prettier"
+	},
+})
 
 -- Python LSP
 vim.lsp.config('pyright', {
@@ -206,4 +234,4 @@ vim.lsp.config('lua_ls', {
 	}
 })
 
-vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls' })
+vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls', 'tinymist' })

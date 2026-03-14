@@ -89,32 +89,28 @@
   #  ];
   #};
 
-  #  programs.kitty = {
-  #    enable = true;
-  #    font.name = "Fira Code";
-  #    font.size = 12;
-  #    shellIntegration.enableZshIntegration = true;
-  #    settings = {
-  #      background_opacity = 0.5;
-  #      enable_audio_bell = false;
-  #    };
+  #programs.kitty = {
+  #  enable = true;
+  #  font.size = 12;
+  #  shellIntegration.enableZshIntegration = true;
+  #  settings = {
+  #    enable_audio_bell = false;
   #  };
+  #};
+
   programs.alacritty = {
     enable = true;
     settings = {
-      font = {
-        normal.family = lib.mkForce "FiraCode Nerd Font Mono";
-        size = 12;
-      };
-      window = {
-        opacity = lib.mkForce 0.5;
-      };
       cursor = {
         style = "Beam"; # ← Bloco, Beam (linha), Underline (sublinhado)
         vi_mode_style = "Beam"; # ← cursor em vi mode
       };
     };
   };
+#  programs.ghostty = {
+#    enable = true;
+#    enableZshIntegration = true;
+#  };
 
   home.sessionVariables = {
     EDITOR = "nvim";

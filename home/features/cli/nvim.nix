@@ -24,6 +24,7 @@ in
         blink-cmp
         harpoon
       	yazi-nvim
+				lualine-nvim
 			];
 
       extraLuaConfig = builtins.readFile ./nvim/init.lua;
