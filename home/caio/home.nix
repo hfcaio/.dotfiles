@@ -107,10 +107,10 @@
       };
     };
   };
-#  programs.ghostty = {
-#    enable = true;
-#    enableZshIntegration = true;
-#  };
+ programs.ghostty = {
+   enable = true;
+   enableZshIntegration = true;
+ };
 
   home.sessionVariables = {
     EDITOR = "nvim";

@@ -6,7 +6,7 @@
     ../features/cli
     ../features/desktop
     ./home.nix
-	./ssh.nix
+    ./ssh.nix
   ];
 
   stylix = {
@@ -14,6 +14,7 @@
     image = ../features/desktop/images/117794241_p2.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     targets.waybar.enable = false;
+    targets.hyprland.enable = true;
     opacity = {
       applications = 0.8;
       terminal = 0.5;
@@ -21,7 +22,7 @@
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.fira-code;
-        name = "FiraCode Nerd Font Mono"; # ← Mono é melhor pra ligaduras
+        name = "FiraCode Nerd Font Mono"; 
       };
       sizes.terminal = 12;
     };
@@ -52,6 +53,7 @@
       ipscan.enable = true;
       gcs.enable = true;
       arduino.enable = true;
+      discord.enable = true;
     };
   };
 }

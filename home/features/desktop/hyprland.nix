@@ -70,7 +70,7 @@ in
           border_size = 2;
           #"col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
           #"col.inactive_border" = "rgba(595959aa)";
-          layout = "dwindle";
+          layout = "scrolling";
           allow_tearing = false;
         };
 
@@ -88,9 +88,9 @@ in
             passes = 1;
             vibrancy = 0.1696;
           };
-          active_opacity = 0.95;
-          inactive_opacity = 0.85;
-          fullscreen_opacity = 1.0;
+          # active_opacity = 0.95;
+          # inactive_opacity = 0.85;
+          # fullscreen_opacity = 1.0;
         };
 
         animations = {
@@ -124,6 +124,7 @@ in
           "$mainMod, R, exec, rofi -show drun -show-icons"
           "$mainMod, S, exec, hyprshot -m region -o ~/screenshots"
           "$mainMod, J, togglesplit"
+          "$mainMod, L, fullscreen"
           # Workspaces
           "$mainMod, 1, workspace, 1"
           "$mainMod, 2, workspace, 2"
@@ -151,8 +152,10 @@ in
         ];
 
         bindm = [
-          "$mainMod, mouse:272, movewindow"
-          "$mainMod, mouse:273, resizewindow"
+          "bindm = SUPER, mouse:272, movewindow"
+          "bindm = SUPER, Control_L, movewindow"
+          "bindm = SUPER, mouse:273, resizewindow"
+          "bindm = SUPER, ALT_L, resizewindow"
         ];
 
         bindel =
