@@ -14,15 +14,24 @@
     image = ../features/desktop/images/117794241_p2.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     targets.waybar.enable = false;
-    targets.hyprland.enable = true;
+    targets.hyprland = {
+      enable = true;
+      image.enable = true;
+    };
     opacity = {
       applications = 0.8;
+      desktop = 0.8;
       terminal = 0.5;
+    };
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
     };
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.fira-code;
-        name = "FiraCode Nerd Font Mono"; 
+        name = "FiraCode Nerd Font Mono";
       };
       sizes.terminal = 12;
     };
