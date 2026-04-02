@@ -13,6 +13,7 @@
       "wheel"
       "docker"
       "networkManager"
+			"dialout"
     ];
     packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
   };
