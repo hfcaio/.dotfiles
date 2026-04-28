@@ -12,7 +12,7 @@
   stylix = {
     enable = true;
     image = ../features/desktop/images/117794241_p2.jpg;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
     targets.waybar.enable = false;
     targets.hyprland = {
       enable = true;
@@ -53,12 +53,14 @@
       hyprland.enable = true;
       fonts.enable = true;
       blender.enable = true;
+			octave.enable = true;
       rofi.enable = true;
       rofi-powermenu.enable = true;
       thunar.enable = false;
       nautilus.enable = true;
       rpi_imager.enable = true;
       latex.enable = false;
+			typst.enable = true;
       ipscan.enable = true;
       gcs.enable = true;
       arduino.enable = true;

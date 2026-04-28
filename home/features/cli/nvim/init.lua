@@ -102,18 +102,18 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 
 -- lualine
 require('lualine').setup({
-  options = {
-    theme = 'auto',
-    icons_enabled = true,
-  },
-  sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { 'branch', 'diff', 'diagnostics' },
-    lualine_c = { 'filename' },
-    lualine_x = { 'filetype' },
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' }
-  },
+	options = {
+		theme = 'auto',
+		icons_enabled = true,
+	},
+	sections = {
+		lualine_a = { 'mode' },
+		lualine_b = { 'branch', 'diff', 'diagnostics' },
+		lualine_c = { 'filename' },
+		lualine_x = { 'filetype' },
+		lualine_y = { 'progress' },
+		lualine_z = { 'location' }
+	},
 })
 
 -- LSP and cmp
@@ -181,6 +181,28 @@ vim.lsp.config('clangd', {
 
 })
 
+-- Arduino LSP
+local clangd = vim.fn.exepath("clangd")
+local arduino_cli = vim.fn.exepath("arduino-cli")
+
+vim.filetype.add({
+  extension = {
+    ino = "cpp"
+  }
+})
+
+vim.lsp.config('arduino-language-server', {
+    cmd = {
+        'arduino-language-server',
+        '-clangd', clangd,
+        '-cli', arduino_cli,
+        '-cli-config', vim.env.HOME .. '/.arduino15/arduino-cli.yaml',
+        '-fqbn', 'arduino:mbed_rp2040:pico',
+    },
+    filetypes = { 'c', 'cpp', 'ino' },
+    capabilities = capabilities,
+})
+
 -- Nix LSP
 vim.lsp.config('nil_ls', {
 	cmd = { 'nil' },
@@ -234,4 +256,4 @@ vim.lsp.config('lua_ls', {
 	}
 })
 
-vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls', 'tinymist' })
+vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls', 'tinymist', 'arduino-language-server' })

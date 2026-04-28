@@ -12,6 +12,7 @@ in {
       enable = true;
       shellAliases = {
 				blt = "${scripts_dir}/blt";
+				nrs = "sudo nixos-rebuild switch --flake .";
         matlab =
           "docker start matlab && docker exec -it matlab /usr/local/MATLAB/R2025b/bin/matlab -nodisplay -nosplash -nodesktop";
       };

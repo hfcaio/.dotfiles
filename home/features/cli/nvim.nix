@@ -12,7 +12,11 @@ in
   options.features.cli.nvim.enable = mkEnableOption "install neovim plugins and configure neovim";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [yazi];
+    home.packages = with pkgs; [
+      yazi
+      arduino-language-server  # ← Só isso
+    ];
+
     programs.neovim = {
       enable = true;
       vimAlias = true;
@@ -23,9 +27,9 @@ in
         telescope-nvim
         blink-cmp
         harpoon
-      	yazi-nvim
-				lualine-nvim
-			];
+        yazi-nvim
+        lualine-nvim
+      ];
 
       extraLuaConfig = builtins.readFile ./nvim/init.lua;
     };

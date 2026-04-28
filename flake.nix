@@ -27,6 +27,16 @@
       url = "github:nix-community/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs = {
+        hyprland.follows = "hyprland";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
 
   };
 
@@ -35,7 +45,7 @@
       self,
       home-manager,
       nixpkgs,
-			stylix,
+      stylix,
       ...
     }@inputs:
     let
@@ -58,7 +68,7 @@
           modules = [
             ./hosts/nixOS
             stylix.nixosModules.stylix
-						inputs.disko.nixosModules.disko
+            inputs.disko.nixosModules.disko
           ];
         };
       };

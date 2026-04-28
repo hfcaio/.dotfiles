@@ -6,6 +6,7 @@
     ./rofi.nix
     ./rofi_pw_menu.nix
     ./blender.nix
+		./octave.nix
     ./discord.nix
     ./code.nix
     ./thunar.nix
@@ -15,6 +16,7 @@
     ./ipscan.nix
     ./gcs.nix
     ./arduino.nix
+		./typst.nix
   ];
 
   home.packages = with pkgs; [

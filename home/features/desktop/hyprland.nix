@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 with lib;
@@ -39,13 +40,22 @@ in
       xwayland.enable = true;
       systemd.enable = false;
 
+      # use the ppackage imported in flake
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage =
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+
+      # hypr plugins
+      # plugins = with inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}; [
+      #   hyprscrolling
+      # ];
+      #
       settings = {
         xwayland.force_zero_scaling = true;
 
         exec-once = [
           "hyprpaper"
           "waybar"
-          "hypridle"
         ];
 
         env = [
@@ -107,20 +117,22 @@ in
           pseudotile = true;
           force_split = 2;
           smart_split = false;
-					default_split_ratio = 1.2;
+          default_split_ratio = 1.2;
           preserve_split = true;
         };
 
-				scrolling = {
-					# column_width = 0.6;
-					# fullscreen_on_one_column = true;
-					# follow_focus = true;
-				};
+        plugin = {
+          hyprscrolling = {
+            column_width = 0.6;
+            fullscreen_on_one_column = true;
+            follow_focus = true;
+          };
+        };
 
         "$mainMod" = "SUPER";
 
         bind = [
-          "$mainMod, T, exec, alacritty"
+          "$mainMod, T, exec, ghostty"
           "$mainMod, Q, killactive"
           "$mainMod, M, exit"
           "$mainMod, B, exec, brave"
@@ -129,7 +141,7 @@ in
           "$mainMod, V, togglefloating"
           "$mainMod, R, exec, rofi -show drun -show-icons"
           "$mainMod, S, exec, hyprshot -m region -o ~/screenshots"
-          "$mainMod, J, togglesplit"
+          # "$mainMod, J, togglesplit" 
           "$mainMod, L, fullscreen"
           # Workspaces
           "$mainMod, 1, workspace, 1"

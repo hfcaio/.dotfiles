@@ -107,10 +107,19 @@
       };
     };
   };
- programs.ghostty = {
-   enable = true;
-   enableZshIntegration = true;
- };
+  programs.ghostty = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-gtk
+			qt6Packages.fcitx5-configtool
+      fcitx5-m17n
+    ];
+  };
 
   home.sessionVariables = {
     EDITOR = "nvim";
