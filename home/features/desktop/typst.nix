@@ -12,10 +12,11 @@ in
   options.features.desktop.typst.enable = mkEnableOption "install texlive and latex usefull packages";
 
   config = mkIf cfg.enable {
-    home.packages = with typstPackages; [
-      pkgs.typst
-      pkgs.zathura
-      zap
+    home.packages = with pkgs; [
+      typst
+      zathura
+      typstPackages.zap
+      typstPackages.fletcher
     ];
   };
 }
