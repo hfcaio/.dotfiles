@@ -14,7 +14,7 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       yazi
-      arduino-language-server  # ← Só isso
+      arduino-language-server  
     ];
 
     programs.neovim = {
