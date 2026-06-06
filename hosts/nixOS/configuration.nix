@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     # Include the results of the hardware scan.
@@ -26,6 +26,18 @@
   # Display manager.
   services.displayManager.ly = {
     enable = true;
+  };
+
+  # Garante que o Ly usa a sessão Hyprland corretamente
+  services.displayManager.defaultSession = "hyprland";
+
+  # Configura XDG para Wayland
+  xdg.portal = {
+    enable = true;
+    wlr.enable = false;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
   };
 
   # Bootloader.
@@ -75,9 +87,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
-    neovim
     git
     gdb
     docker-compose
@@ -120,6 +129,8 @@
 
   programs.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
 
@@ -134,8 +145,18 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall = {
-    enable = true;
-    trustedInterfaces = [ "docker0" ]; # Confiar na interface Docker
+    enable = false;
+    trustedInterfaces = [ "docker0" ];
+    allowedUDPPortRanges = [
+      {
+        from = 7400;
+        to = 7500;
+      }
+      {
+        from = 13100;
+        to = 13200;
+      }
+    ];
   };
 
   # This value determines the NixOS release from which the default

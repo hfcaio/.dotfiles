@@ -19,7 +19,6 @@ in
     home.packages = with pkgs; [
       wl-clipboard
       brightnessctl
-      pulseaudio
       hyprshot
       hypridle
       hyprlock
@@ -38,7 +37,7 @@ in
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
-      systemd.enable = false;
+      systemd.enable = true;
 
       # use the ppackage imported in flake
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
@@ -55,7 +54,7 @@ in
 
         exec-once = [
           "hyprpaper"
-          "waybar"
+          #"waybar"
         ];
 
         env = [
@@ -141,7 +140,7 @@ in
           "$mainMod, V, togglefloating"
           "$mainMod, R, exec, rofi -show drun -show-icons"
           "$mainMod, S, exec, hyprshot -m region -o ~/screenshots"
-          # "$mainMod, J, togglesplit" 
+          # "$mainMod, J, togglesplit"
           "$mainMod, L, fullscreen"
           # Workspaces
           "$mainMod, 1, workspace, 1"
@@ -178,15 +177,14 @@ in
 
         bindel =
           let
-            pactl = lib.getExe' pkgs.pulseaudio "pactl";
             brightnessctl = lib.getExe' pkgs.brightnessctl "brightnessctl";
           in
           [
             ",XF86MonBrightnessDown, exec, ${brightnessctl} set 5%-"
             ",XF86MonBrightnessUp,   exec, ${brightnessctl} set +5%"
-            ",xf86audioraisevolume,  exec, ${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
-            ",xf86audiolowervolume,  exec, ${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
-            ",xf86audiomute,         exec, ${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
+            ",xf86audioraisevolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+            ",xf86audiolowervolume,  exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+            ",xf86audiomute,         exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
             ",keyboard_brightness_up_shortcut,   exec, ${brightnessctl} -d *::kbd_backlight set +5%"
             ",keyboard_brightness_down_shortcut, exec, ${brightnessctl} -d *::kbd_backlight set -5%"
           ];
@@ -197,7 +195,7 @@ in
     programs.waybar = {
       enable = true;
       style = ./styles/waybar.css;
-      systemd.enable = false;
+      systemd.enable = true;
       settings = {
         mainBar = {
           layer = "top";
