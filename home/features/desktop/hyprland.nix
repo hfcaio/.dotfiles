@@ -38,6 +38,7 @@ in
       enable = true;
       xwayland.enable = true;
       systemd.enable = true;
+      configType = "hyprlang";
 
       # use the ppackage imported in flake
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
@@ -113,7 +114,6 @@ in
         };
 
         dwindle = {
-          pseudotile = true;
           force_split = 2;
           smart_split = false;
           default_split_ratio = 1.2;

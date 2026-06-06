@@ -13,9 +13,9 @@
       "wheel"
       "docker"
       "networkManager"
-			"dialout"
+      "dialout"
     ];
-    packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
+    packages = [ inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default ];
   };
 
   #enable stylix

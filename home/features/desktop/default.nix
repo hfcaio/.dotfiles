@@ -1,28 +1,17 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  dir = ./.;
+  nixFiles = lib.filterAttrs
+    (name: type: type == "regular" && lib.hasSuffix ".nix" name && name != "default.nix")
+    (builtins.readDir dir);
+  importPaths = map (name: dir + "/${name}") (lib.attrNames nixFiles);
+in
 {
-  imports = [
-    ./hyprland.nix
-    ./fonts.nix
-    ./rofi.nix
-    ./rofi_pw_menu.nix
-    ./blender.nix
-		./octave.nix
-    ./discord.nix
-    ./code.nix
-    ./thunar.nix
-    ./nautilus.nix
-    ./rpi_imager.nix
-    ./latex.nix
-    ./ipscan.nix
-    ./gcs.nix
-    ./arduino.nix
-		./typst.nix
-  ];
+  imports = importPaths;
 
   home.packages = with pkgs; [
-    xorg.xhost
-    xorg.xauth
+    xhost
+    xauth
   ];
   services.udiskie.enable = true;
-
 }

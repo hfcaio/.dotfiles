@@ -27,10 +27,10 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' 
 vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
 -- setting color theme
--- vim.cmd.colorscheme("catppuccin-mocha")
--- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.cmd.colorscheme("catppuccin-mocha")
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- Keymaps
 vim.keymap.set('n', '<Tab>', '>>', { desc = 'Indent line' })

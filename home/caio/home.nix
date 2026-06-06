@@ -22,7 +22,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "26.05"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -30,7 +30,7 @@
     brave
     vscode
 
-    webots-fhs
+    #webots-fhs
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -113,10 +113,11 @@
   };
 
   i18n.inputMethod = {
-    enabled = "fcitx5";
+    type = "fcitx5";
+    enable = true;
     fcitx5.addons = with pkgs; [
       fcitx5-gtk
-			qt6Packages.fcitx5-configtool
+      qt6Packages.fcitx5-configtool
       fcitx5-m17n
     ];
   };

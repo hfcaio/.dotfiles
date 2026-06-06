@@ -65,25 +65,25 @@ in pkgs.buildFHSEnv {
       libxkbcommon
 
       # Bibliotecas XCB
-      xorg.libxcb
-      xorg.xcbutil
-      xorg.xcbutilimage
-      xorg.xcbutilkeysyms
-      xorg.xcbutilrenderutil
-      xorg.xcbutilwm
-      xorg.xcbutilcursor
+      libxcb
+      libxcb-util
+      libxcb-image
+      libxcb-keysyms
+      libxcb-render-util
+      libxcb-wm
+      libxcb-cursor
 
       # X11 libraries
-      xorg.libX11
-      xorg.libXcomposite
-      xorg.libXtst
-      xorg.libXext
-      xorg.libXrender
-      xorg.libXrandr
-      xorg.libXi
-      xorg.libXcursor
-      xorg.libXinerama
-      xorg.libXft
+      libx11
+      libxcomposite
+      libxtst
+      libxext
+      libxrender
+      libxrandr
+      libxi
+      libxcursor
+      libxinerama
+      libxft
 
       # NSS
       nss
@@ -151,7 +151,7 @@ in pkgs.buildFHSEnv {
       udev
 
       # Virtual framebuffer
-      xorg.xorgserver
+      xorg-server
       xvfb-run
     ]);
 

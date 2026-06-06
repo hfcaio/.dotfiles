@@ -47,7 +47,6 @@
       python.enable = true;
       fzf.enable = true;
       direnv.enable = true;
-      yazi.enable = false;
     };
     desktop = {
       hyprland.enable = true;
