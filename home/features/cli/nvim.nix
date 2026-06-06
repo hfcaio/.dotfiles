@@ -12,11 +12,6 @@ in
   options.features.cli.nvim.enable = mkEnableOption "install neovim plugins and configure neovim";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      yazi
-      arduino-language-server  
-    ];
-
     programs.neovim = {
       enable = true;
       vimAlias = true;

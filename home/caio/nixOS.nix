@@ -51,14 +51,14 @@
     };
     desktop = {
       hyprland.enable = true;
-      fonts.enable = true;
-      blender.enable = true;
+      fonts.enable = false;
+      blender.enable = false;
 			octave.enable = true;
       rofi.enable = true;
       rofi-powermenu.enable = true;
       thunar.enable = false;
       nautilus.enable = true;
-      rpi_imager.enable = true;
+      rpi_imager.enable = false;
       latex.enable = false;
 			typst.enable = true;
       ipscan.enable = true;

@@ -7,7 +7,7 @@ in {
 
   config = mkIf cfg.enable {
 
-    home.packages = with pkgs; [ lua-language-server clang-tools pyright nil tinymist];
+    home.packages = with pkgs; [ lua-language-server clang-tools pyright nil tinymist arduino-language-server ];
   };
 }
 

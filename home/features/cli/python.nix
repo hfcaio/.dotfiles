@@ -10,7 +10,6 @@ let
       virtualenv
       numpy
       matplotlib
-      opencv4
     ]);
 in {
   options.features.cli.python = {
