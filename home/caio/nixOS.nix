@@ -64,6 +64,9 @@
       gcs.enable = true;
       arduino.enable = true;
       discord.enable = true;
+      obs.enable = true;
+      vagrant.enable = true;
+      claude.enable = true;
     };
   };
 }
