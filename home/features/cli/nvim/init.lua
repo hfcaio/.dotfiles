@@ -1,3 +1,4 @@
+vim.opt.exrc = true
 vim.opt.mouse = "a"
 vim.opt.swapfile = false
 vim.opt.winborder = "rounded"

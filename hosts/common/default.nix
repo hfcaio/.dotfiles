@@ -50,7 +50,7 @@
     };
     gc = {
       automatic = true;
-      options = "--delete-older-than 10d";
+      options = "--delete-older-than 5d";
     };
     optimise.automatic = true;
     registry = (lib.mapAttrs (_: flake: { inherit flake; })) (

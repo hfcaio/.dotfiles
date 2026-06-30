@@ -60,6 +60,10 @@
   # Enable docker
   virtualisation.docker.enable = true;
 
+  # Enable VirtualBox
+  virtualisation.virtualbox.host.enable = true;
+  users.users.caio.extraGroups = [ "vboxusers" ];
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 

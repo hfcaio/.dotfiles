@@ -6,7 +6,7 @@
 }:
 {
   users.users.caio = {
-    initialHashedPassword = "$y$j9T$FFY6GHTYSbetDkQnmwKit1$L3topSaqGKdAa6DFH32hXxEUSNfeaacC5I/bxb47Pe8";
+    initialPassword = "1234";
     isNormalUser = true;
     description = "caio";
     extraGroups = [
