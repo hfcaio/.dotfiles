@@ -13,13 +13,21 @@
 
   home.packages = with pkgs; [
     nerd-fonts.fira-code
-    inputs.zen-browser.packages."${pkgs.system}".default
   ];
 
   fonts.fontconfig.enable = true;
 
   home.file = {
     ".clang-format".source = ../features/cli/formatters/.clang-format;
+  };
+
+  xdg.dataFile = {
+    "applications/com.mitchellh.ghostty.desktop".source =
+      "${pkgs.ghostty}/share/applications/com.mitchellh.ghostty.desktop";
+    "icons/hicolor" = {
+      source = "${pkgs.ghostty}/share/icons/hicolor";
+      recursive = true;
+    };
   };
 
   programs.ghostty = {
