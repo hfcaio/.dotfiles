@@ -28,7 +28,6 @@
       font-size = 12;
       background-opacity = 0.85;
       background-blur-radius = 10;
-      gtk-opengl-fallback = true;
       keybind = [
         "ctrl+b>c=new_tab"
         "ctrl+b>n=next_tab"
