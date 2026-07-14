@@ -23,6 +23,9 @@
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
+    package = pkgs.writeShellScriptBin "ghostty" ''
+      exec ${inputs.nixgl.packages."${pkgs.system}".nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
+    '';
     settings = {
       font-family = "FiraCode Nerd Font Mono";
       font-size = 12;
