@@ -27,15 +27,22 @@
       url = "github:nix-community/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
+    
+		hyprland = {
       url = "github:hyprwm/Hyprland";
     };
-    hyprland-plugins = {
+    
+		hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs = {
         hyprland.follows = "hyprland";
         nixpkgs.follows = "nixpkgs";
       };
+    };
+
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
@@ -80,11 +87,11 @@
             ./home/caio/nixOS.nix
           ];
         };
-        "caio@ubuntu" = home-manager.lib.homeManagerConfiguration {
+        "caio-freitas@ubuntu" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
-            ./home/caio/ubuntu.nix
+            ./home/caio-freitas/ubuntu.nix
           ];
         };
       };

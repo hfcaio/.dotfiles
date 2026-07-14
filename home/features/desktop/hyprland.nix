@@ -134,7 +134,7 @@ in
           "$mainMod, T, exec, ghostty"
           "$mainMod, Q, killactive"
           "$mainMod, M, exit"
-          "$mainMod, B, exec, brave"
+          "$mainMod, B, exec, zen"
           "$mainMod, F, exec, nautilus"
           "$mainMod, P, exec, ~/.config/rofi/powermenu.sh"
           "$mainMod, V, togglefloating"
