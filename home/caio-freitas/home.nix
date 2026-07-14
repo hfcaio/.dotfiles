@@ -18,6 +18,10 @@
 
   fonts.fontconfig.enable = true;
 
+  xdg.systemDirs.data = [
+    "${config.home.homeDirectory}/.nix-profile/share"
+  ];
+
   home.file = {
     ".clang-format".source = ../features/cli/formatters/.clang-format;
   };
@@ -25,9 +29,16 @@
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
-    package = pkgs.writeShellScriptBin "ghostty" ''
-      exec ${inputs.nixgl.packages."${pkgs.system}".nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
-    '';
+    package = pkgs.symlinkJoin {
+      name = "ghostty-nixgl";
+      paths = [ pkgs.ghostty ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        rm $out/bin/ghostty
+        makeWrapper ${inputs.nixgl.packages."${pkgs.system}".nixGLIntel}/bin/nixGLIntel $out/bin/ghostty \
+          --add-flags "${pkgs.ghostty}/bin/ghostty"
+      '';
+    };
     settings = {
       font-family = "FiraCode Nerd Font Mono";
       font-size = 12;
