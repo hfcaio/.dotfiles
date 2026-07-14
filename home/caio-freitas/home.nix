@@ -18,10 +18,6 @@
 
   fonts.fontconfig.enable = true;
 
-  xdg.systemDirs.data = [
-    "${config.home.homeDirectory}/.nix-profile/share"
-  ];
-
   home.file = {
     ".clang-format".source = ../features/cli/formatters/.clang-format;
   };
