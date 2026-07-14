@@ -16,6 +16,8 @@
     inputs.zen-browser.packages."${pkgs.system}".default
   ];
 
+  fonts.fontconfig.enable = true;
+
   home.file = {
     ".clang-format".source = ../features/cli/formatters/.clang-format;
   };
