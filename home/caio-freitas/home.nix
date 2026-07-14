@@ -45,6 +45,14 @@
     };
   };
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
+  programs.zsh.initExtra = ''
+    [ -f /opt/ros/jazzy/setup.zsh ] && source /opt/ros/jazzy/setup.zsh
+  '';
+
   home.sessionVariables = {
     EDITOR = "nvim";
   };
