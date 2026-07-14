@@ -1,6 +1,5 @@
-{ pkgs, ... }:
+{ ... }:
 {
-
   imports = [
     ../common
     ../features/cli
@@ -9,74 +8,45 @@
     ./ssh.nix
   ];
 
-  i18n.inputMethod = {
-    type = "fcitx5";
-    enable = true;
-    fcitx5.addons = with pkgs; [
-      fcitx5-gtk
-      qt6Packages.fcitx5-configtool
-      fcitx5-m17n
-    ];
-  };
-
-  stylix = {
-    enable = true;
-    image = ../features/desktop/images/117794241_p2.jpg;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
-    targets.waybar.enable = false;
-    targets.hyprland = {
-      enable = true;
-      image.enable = true;
-    };
-    opacity = {
-      applications = 0.8;
-      desktop = 0.8;
-      terminal = 0.5;
-    };
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
-      size = 24;
-    };
-    fonts = {
-      monospace = {
-        package = pkgs.nerd-fonts.fira-code;
-        name = "FiraCode Nerd Font Mono";
-      };
-      sizes.terminal = 12;
-    };
-  };
-
   features = {
     cli = {
       zsh.enable = true;
       fetch.enable = true;
       starship.enable = true;
-      lsp.enable = true;
-      nvim.enable = true;
-      python.enable = true;
-      fzf.enable = true;
-      direnv.enable = true;
+      lsp = {
+        enable = true;
+        cpp.enable     = true;
+        arduino.enable = true;
+        nix.enable     = true;
+        typst.enable   = true;
+        python.enable  = true;
+        lua.enable     = true;
+      };
+      nvim.enable    = true;
+      python.enable  = true;
+      fzf.enable     = true;
+      direnv.enable  = true;
+      tmux.enable    = true;
     };
     desktop = {
-      hyprland.enable = true;
-      fonts.enable = false;
-      blender.enable = false;
-			octave.enable = true;
-      rofi.enable = true;
+      hyprland.enable      = true;
+      fonts.enable         = false;
+      blender.enable       = false;
+      octave.enable        = true;
+      rofi.enable          = true;
       rofi-powermenu.enable = true;
-      thunar.enable = false;
-      nautilus.enable = true;
-      rpi_imager.enable = false;
-      latex.enable = false;
-			typst.enable = true;
-      ipscan.enable = true;
-      gcs.enable = true;
-      arduino.enable = true;
-      discord.enable = true;
-      obs.enable = true;
-      vagrant.enable = true;
-      claude.enable = true;
+      thunar.enable        = false;
+      nautilus.enable      = true;
+      rpi_imager.enable    = false;
+      latex.enable         = false;
+      typst.enable         = true;
+      ipscan.enable        = true;
+      gcs.enable           = true;
+      arduino.enable       = true;
+      discord.enable       = true;
+      obs.enable           = true;
+      vagrant.enable       = true;
+      claude.enable        = true;
     };
   };
 }

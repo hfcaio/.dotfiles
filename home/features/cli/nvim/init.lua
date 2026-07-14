@@ -51,6 +51,12 @@ end, { desc = 'Open terminal' })
 
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+vim.keymap.set('n', '<leader>nr', function()
+	vim.cmd('botright 15split')
+	vim.cmd('terminal sudo nixos-rebuild switch --flake /home/caio/git_projects/.dotfiles#nixOS')
+	vim.cmd('startinsert')
+end, { desc = 'NixOS rebuild switch' })
+
 
 -- Autoformat with Ctrl + t
 vim.keymap.set({ 'n', 'i' }, "<C-t>", function()
