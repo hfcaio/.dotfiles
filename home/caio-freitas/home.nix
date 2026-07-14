@@ -22,8 +22,27 @@
   };
 
   xdg.dataFile = {
-    "applications/com.mitchellh.ghostty.desktop".source =
-      "${pkgs.ghostty}/share/applications/com.mitchellh.ghostty.desktop";
+    "applications/com.mitchellh.ghostty.desktop".text = ''
+      [Desktop Entry]
+      Version=1.0
+      Name=Ghostty
+      Type=Application
+      Comment=A terminal emulator
+      TryExec=${config.home.homeDirectory}/.nix-profile/bin/ghostty
+      Exec=${config.home.homeDirectory}/.nix-profile/bin/ghostty --gtk-single-instance=true
+      Icon=com.mitchellh.ghostty
+      Categories=System;TerminalEmulator;
+      Keywords=terminal;tty;pty;
+      StartupNotify=true
+      StartupWMClass=com.mitchellh.ghostty
+      Terminal=false
+      Actions=new-window;
+      X-TerminalArgExec=-e
+
+      [Desktop Action new-window]
+      Name=New Window
+      Exec=${config.home.homeDirectory}/.nix-profile/bin/ghostty --gtk-single-instance=true
+    '';
     "icons/hicolor" = {
       source = "${pkgs.ghostty}/share/icons/hicolor";
       recursive = true;
