@@ -1,0 +1,9 @@
+# nix build outputs
+result
+result-*
+
+# instaladores/arquivos grandes que não pertencem ao repo
+*.zip
+*.tar.gz
+*.tar.bz2
+*.deb
