@@ -8,12 +8,10 @@ in {
   config = mkIf cfg.enable {
     programs.vscode = {
       enable = true;
-      userSettings = {
+      profiles.default.userSettings = {
         "workbench.settings.editor" = "json";
         "workbench.editor.defaultBinaryEditor" = "default";
         "editor.tabSize" = 4;
-        "editor.fontFamily" = "'Fira Code'";
-        "workbench.colorTheme" = "Catppuccin Mocha";
         "workbench.iconTheme" = "material-icon-theme";
         "editor.formatOnSave" = true;
       };

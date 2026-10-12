@@ -24,33 +24,6 @@
   # release notes.
   home.stateVersion = "26.05"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = with pkgs; [
-    brave
-    inputs.zen-browser.packages."${system}".default
-    vscode
-    usbutils
-
-    #webots-fhs
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-  ];
-
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -113,19 +86,20 @@
     enable = true;
     enableZshIntegration = true;
     settings = {
-      keybind = [
-        "ctrl+b>c=new_tab"
-        "ctrl+b>n=next_tab"
-        "ctrl+b>p=previous_tab"
-        "ctrl+b>x=close_surface"
-        "ctrl+b>shift+five=new_split:right"
-        "ctrl+b>shift+apostrophe=new_split:down"
-        "ctrl+b>left=goto_split:left"
-        "ctrl+b>right=goto_split:right"
-        "ctrl+b>up=goto_split:up"
-        "ctrl+b>down=goto_split:down"
-        "ctrl+b>z=toggle_split_zoom"
-      ];
+      shell-integration-features = "ssh-env";
+      # keybind = [
+      #   "ctrl+b>c=new_tab"
+      #   "ctrl+b>n=next_tab"
+      #   "ctrl+b>p=previous_tab"
+      #   "ctrl+b>x=close_surface"
+      #   "ctrl+b>shift+five=new_split:right"
+      #   "ctrl+b>shift+apostrophe=new_split:down"
+      #   "ctrl+b>left=goto_split:left"
+      #   "ctrl+b>right=goto_split:right"
+      #   "ctrl+b>up=goto_split:up"
+      #   "ctrl+b>down=goto_split:down"
+      #   "ctrl+b>z=toggle_split_zoom"
+      # ];
     };
   };
 
@@ -144,6 +118,20 @@
       qt6Packages.fcitx5-configtool
       fcitx5-m17n
     ];
+
+    # Sem profile o fcitx5 assume `keyboard-us`. Apps Wayland nativos ignoram isso para
+    # teclas simples (usam o layout do compositor), mas clientes XIM — notadamente
+    # Java/AWT, como a IDE do MATLAB — recebem as teclas já traduzidas pelo fcitx5 e
+    # acabam com teclado americano.
+    fcitx5.settings.inputMethod = {
+      GroupOrder."0" = "Default";
+      "Groups/0" = {
+        Name = "Default";
+        "Default Layout" = "br";
+        DefaultIM = "keyboard-br";
+      };
+      "Groups/0/Items/0".Name = "keyboard-br";
+    };
   };
 
   stylix = {
