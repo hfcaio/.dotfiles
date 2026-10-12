@@ -29,7 +29,10 @@
     };
     
 		hyprland = {
-      url = "github:hyprwm/Hyprland";
+      # Pinned to last hyprlang-compatible release (0.44, 2026-07-14).
+      # Hyprland 0.56+ defaults to Lua config and breaks the hyprlang setup
+      # (exec-once syntax + auto-generated hyprland.lua). Unpin when migrating.
+      url = "github:hyprwm/Hyprland/e0d9283897724403ea8574b3ed419d2678a39231";
     };
     
 		hyprland-plugins = {
