@@ -7,3 +7,6 @@ result-*
 *.tar.gz
 *.tar.bz2
 *.deb
+
+# claude code local-only overrides (grants scoped to this machine)
+.claude/settings.local.json
