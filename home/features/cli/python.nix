@@ -16,5 +16,7 @@ in {
     enable = mkEnableOption "Enable Python CLI tools and environment";
   };
 
-  config = mkIf cfg.enable { home.packages = [ myPython ]; };
+  config = mkIf cfg.enable {
+    home.packages = [ myPython pkgs.uv ];
+  };
 }

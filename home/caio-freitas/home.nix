@@ -58,7 +58,7 @@
       buildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         rm $out/bin/ghostty
-        makeWrapper ${inputs.nixgl.packages."${pkgs.system}".nixGLIntel}/bin/nixGLIntel $out/bin/ghostty \
+        makeWrapper ${inputs.nixgl.packages."${pkgs.stdenv.hostPlatform.system}".nixGLIntel}/bin/nixGLIntel $out/bin/ghostty \
           --add-flags "${pkgs.ghostty}/bin/ghostty"
       '';
     };
