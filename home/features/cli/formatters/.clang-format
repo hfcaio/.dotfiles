@@ -4,3 +4,4 @@ IndentWidth: 2
 TabWidth: 2
 UseTab: Never
 IndentPPDirectives: AfterHash
+ColumnLimit: 100

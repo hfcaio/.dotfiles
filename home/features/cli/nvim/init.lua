@@ -16,7 +16,6 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.colorcolumn = "100"
 vim.opt.textwidth = 100
-vim.opt.formatoptions:append("c")
 
 -- Leader key
 vim.g.mapleader = " "
@@ -28,7 +27,7 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' 
 vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
 -- setting color theme
-vim.cmd.colorscheme("catppuccin-mocha")
+--vim.cmd.colorscheme("catppuccin-mocha")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
@@ -104,8 +103,49 @@ vim.keymap.set('n', '<leader>4', function() harpoon_ui.nav_file(4) end)
 
 -- Telescope
 local builtin = require('telescope.builtin')
+
+require('telescope').setup({
+defaults = {
+-- Argumentos que o live_grep passa ao rg. Os defaults do telescope nao
+-- incluem --hidden, entao dotfiles ficavam de fora das procuras.
+vimgrep_arguments = {
+'rg', '--color=never', '--no-heading', '--with-filename',
+'--line-number', '--column', '--smart-case', '--hidden', '--glob', '!.git',
+},
+},
+extensions = {
+-- Sorter nativo em C: o sorter padrao e Lua e arrasta-se em projetos grandes.
+fzf = {
+fuzzy = true,
+override_generic_sorter = true,
+override_file_sorter = true,
+case_mode = 'smart_case',
+},
+},
+})
+require('telescope').load_extension('fzf')
+
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+
+-- Procura por CONTEUDO, nao por nome de ficheiro: o rg corre a cada tecla.
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep (conteudo)' })
+
+-- Palavra debaixo do cursor, sem ter de a escrever.
+vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Telescope grep palavra sob o cursor' })
+
+-- O mesmo em modo visual, usando a seleccao. Guarda e repoe o registo v para
+-- nao destruir o que o utilizador la tinha.
+vim.keymap.set('v', '<leader>fw', function()
+local saved = vim.fn.getreg('v')
+local saved_type = vim.fn.getregtype('v')
+vim.cmd('noautocmd normal! "vy')
+builtin.grep_string({ search = vim.fn.getreg('v') })
+vim.fn.setreg('v', saved, saved_type)
+end, { desc = 'Telescope grep seleccao' })
+
+-- Procura dentro do buffer actual (nao do projecto inteiro).
+vim.keymap.set('n', '<leader>f/', builtin.current_buffer_fuzzy_find, { desc = 'Telescope procurar no buffer' })
 
 -- lualine
 require('lualine').setup({
@@ -193,21 +233,21 @@ local clangd = vim.fn.exepath("clangd")
 local arduino_cli = vim.fn.exepath("arduino-cli")
 
 vim.filetype.add({
-  extension = {
-    ino = "cpp"
-  }
+	extension = {
+		ino = "cpp"
+	}
 })
 
 vim.lsp.config('arduino-language-server', {
-    cmd = {
-        'arduino-language-server',
-        '-clangd', clangd,
-        '-cli', arduino_cli,
-        '-cli-config', vim.env.HOME .. '/.arduino15/arduino-cli.yaml',
-        '-fqbn', 'arduino:mbed_rp2040:pico',
-    },
-    filetypes = { 'c', 'cpp', 'ino' },
-    capabilities = capabilities,
+	cmd = {
+		'arduino-language-server',
+		'-clangd', clangd,
+		'-cli', arduino_cli,
+		'-cli-config', vim.env.HOME .. '/.arduino15/arduino-cli.yaml',
+		'-fqbn', 'arduino:mbed_rp2040:pico',
+	},
+	filetypes = { 'c', 'cpp', 'ino' },
+	capabilities = capabilities,
 })
 
 -- Nix LSP
@@ -219,7 +259,7 @@ vim.lsp.config('nil_ls', {
 	settings = {
 		["nil"] = {
 			formatting = {
-				command = { "nixfmt" },
+				command = { "nixfmt", "--width=100" },
 			},
 		}
 	}
@@ -229,8 +269,11 @@ vim.lsp.config('tinymist', {
 	cmd = { 'tinymist' },
 	filetypes = { 'typst' },
 	capabilities = capabilities,
-	init_options = {
-		formatterMode = "typstyle", -- ou "prettier"
+	settings = {
+		formatterMode = "typstyle",
+		typstyle = {
+			columnWidth = 100,
+		},
 	},
 })
 
@@ -259,8 +302,22 @@ vim.lsp.config('lua_ls', {
 				checkThirdParty = false,
 			},
 			telemetry = { enable = false },
+			format = {
+				enable = true,
+				defaultConfig = {
+					max_line_length = "100",
+				},
+			},
 		}
 	}
 })
 
-vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls', 'tinymist', 'arduino-language-server' })
+-- QML LSP
+vim.lsp.config('qmlls', {
+	cmd = { 'qmlls' },
+	filetypes = { 'qml' },
+	capabilities = capabilities,
+})
+
+vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls', 'tinymist', 'arduino-language-server',
+	'qmlls' })
