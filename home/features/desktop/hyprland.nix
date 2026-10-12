@@ -8,7 +8,6 @@
 with lib;
 let
   cfg = config.features.desktop.hyprland;
-  wallpaper = ./images/117794241_p2.jpg;
 in
 {
   options.features.desktop.hyprland.enable = mkEnableOption "hyprland config";
@@ -22,16 +21,8 @@ in
       hyprshot
       hypridle
       hyprlock
-      hyprpaper
       pamixer
     ];
-
-    # ── Wallpaper config ────────────────────────────────────────────────────
-    xdg.configFile."hypr/hyprpaper.conf".text = ''
-      preload = ${wallpaper}
-      wallpaper = ,${wallpaper}
-      splash = false
-    '';
 
     # ── Hyprland ─────────────────────────────────────────────────────────────
     wayland.windowManager.hyprland = {
@@ -54,14 +45,15 @@ in
         xwayland.force_zero_scaling = true;
 
         exec-once = [
-          "hyprpaper"
           "waybar"
         ];
 
         env = [
           "XCURSOR_SIZE,12"
-          "LIBVA_DRIVER_NAME,iHD" # Intel Arc hardware acceleration
-          "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
+          "LIBVA_DRIVER_NAME,iHD" # VAAPI na iGPU (Iris Xe)
+          # So a iGPU. O caminho by-path e estavel entre boots, ao contrario
+          # de cardN. Incluir a Arc dGPU (03:00.0) aqui mantinha-a presa em D0.
+          "WLR_DRM_DEVICES,/dev/dri/by-path/pci-0000:00:02.0-card"
         ];
 
         monitor = ",1920x1080,auto,1";
@@ -137,6 +129,8 @@ in
           "$mainMod, B, exec, zen"
           "$mainMod, F, exec, nautilus"
           "$mainMod, P, exec, ~/.config/rofi/powermenu.sh"
+          "$mainMod CTRL, B, exec, ~/.config/rofi/bluetooth.sh"
+          "$mainMod CTRL, W, exec, ~/.config/rofi/wifi.sh"
           "$mainMod, V, togglefloating"
           "$mainMod, R, exec, rofi -show drun -show-icons"
           "$mainMod, S, exec, hyprshot -m region -o ~/screenshots"
@@ -300,28 +294,44 @@ in
     };
 
     # ── Hypridle ─────────────────────────────────────────────────────────────
-    # Screen dims after 4min, locks after 5min, suspends after 10min
-    xdg.configFile."hypr/hypridle.conf".text = ''
-      general {
-        lock_cmd = hyprlock
-        before_sleep_cmd = hyprlock
-      }
+    # Escrever o hypridle.conf a mao nao chega: o hypridle.service fica
+    # "disabled/inactive" e nada o arranca. O modulo do home-manager gera o
+    # config E liga o servico ao hyprland-session.target.
+    #
+    # Escurece aos 4min, bloqueia aos 5min, ecra off aos 10min,
+    # suspend-then-hibernate aos 30min.
+    services.hypridle = {
+      enable = true;
+      settings = {
+        general = {
+          # pidof evita empilhar instancias do hyprlock se o timeout repetir
+          lock_cmd = "pidof hyprlock || hyprlock";
+          before_sleep_cmd = "loginctl lock-session";
+          after_sleep_cmd = "hyprctl dispatch dpms on";
+        };
 
-      listener {
-        timeout = 240
-        on-timeout = brightnessctl set 4%
-        on-resume = brightnessctl set 20%
-      }
-
-      listener {
-        timeout = 300
-        on-timeout = hyprlock
-      }
-
-      listener {
-        timeout = 600
-        on-timeout = systemctl suspend
-      }
-    '';
+        listener = [
+          {
+            timeout = 240;
+            # -s guarda o brilho atual, -r restaura-o (em vez de assumir 20%)
+            on-timeout = "brightnessctl -s set 4%";
+            on-resume = "brightnessctl -r";
+          }
+          {
+            timeout = 300;
+            on-timeout = "loginctl lock-session";
+          }
+          {
+            timeout = 600;
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
+          }
+          {
+            timeout = 1800;
+            on-timeout = "systemctl suspend-then-hibernate";
+          }
+        ];
+      };
+    };
   };
 }
