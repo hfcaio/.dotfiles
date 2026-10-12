@@ -1,22 +1,50 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
 with lib;
 let
   cfg = config.features.desktop.rofi;
+  colors = config.lib.stylix.colors;
+  homeDir = config.home.homeDirectory;
 in
 {
   options.features.desktop.rofi.enable = mkEnableOption "enable rofi";
 
   config = mkIf cfg.enable {
+    home.file.".config/rofi/system.sh".source =
+      pkgs.writeShellScript "rofi-system" (builtins.readFile ./rofi/scripts/system.sh);
+
+    home.file.".config/rofi/colors.rasi".text = ''
+      * {
+          base00: #${colors.base00};
+          base01: #${colors.base01};
+          base02: #${colors.base02};
+          base03: #${colors.base03};
+          base04: #${colors.base04};
+          base05: #${colors.base05};
+          base06: #${colors.base06};
+          base07: #${colors.base07};
+          base08: #${colors.base08};
+          base09: #${colors.base09};
+          base0a: #${colors.base0A};
+          base0b: #${colors.base0B};
+          base0c: #${colors.base0C};
+          base0d: #${colors.base0D};
+          base0e: #${colors.base0E};
+          base0f: #${colors.base0F};
+      }
+    '';
+
     programs.rofi = {
       enable = true;
 
       extraConfig = {
-        modi = "drun,window";
+        modi = "drun,System:${homeDir}/.config/rofi/system.sh";
+        display-drun = "Apps";
         case-sensitive = false;
         cycle = true;
         filter = "";
@@ -48,14 +76,10 @@ in
         disable-history = false;
         sorting-method = "normal";
         max-history-size = 25;
-        display-drun = "Apps";
-        display-run = "Run";
-        display-filebrowser = "Files";
-        display-window = "Windows";
-        display-windowcd = "Window CD";
-        display-ssh = "SSH";
-        display-combi = "Combi";
-        display-keys = "Keys";
+        kb-mode-next = "Tab";
+        kb-mode-previous = "Shift+Tab";
+        kb-element-next = "";
+        kb-element-prev = "";
         terminal = "rofi-sensible-terminal";
         font = "JetBrains Mono 12";
         sort = false;
