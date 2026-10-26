@@ -11,6 +11,7 @@ in {
       enableZshIntegration = true;
       settings = {
         add_newline = false;
+        command_timeout = 2000;
         character = {
           success_symbol = "[>](bold green)";
           error_symbol = "[>](bold red)";

@@ -14,8 +14,8 @@ in {
       extraConfig = ''
         set -ag terminal-overrides ",xterm-256color:RGB"
 
-        set -g base-index 1
-        setw -g pane-base-index 1
+        set -g base-index 0
+        setw -g pane-base-index 0
         set -g renumber-windows on
 
         # Split panes
