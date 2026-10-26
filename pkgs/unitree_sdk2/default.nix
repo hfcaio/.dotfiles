@@ -20,8 +20,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "unitreerobotics";
     repo = pname;
-    rev = "main";
-    sha256 = "sha256-oJy3GCVYzPeWBX61dJtNz1um3S0PJe11yP9p/S1AwNQ=";
+    rev = "${version}";
+    sha256 = "sha256-a+O3jQDJFq/v0zhpGJVuwjgWAZWkIqiNfKt/L4IOSco=";
   };
 
   buildInputs = [
