@@ -144,7 +144,17 @@
   time.timeZone = "Europe/Lisbon";
 
   # Enable docker
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    # DNS fixo para containers em rede bridge (o default do `docker build`).
+    # Sem isto o Docker copia os servidores do /etc/resolv.conf do host, e o
+    # build da imagem atlas-sim falhou com "Could not resolve host: github.com".
+    # Containers com network_mode: host (todos os do atlas_ws) continuam a usar
+    # o DNS do host e nao sao afetados.
+    # Contra: nomes que so o DNS da rede local resolve deixam de funcionar
+    # dentro de containers bridge. Se uma rede bloquear DNS publico, apagar.
+    daemon.settings.dns = [ "1.1.1.1" "8.8.8.8" ];
+  };
 
   # Enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
@@ -226,6 +236,20 @@
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
+
+  # hyprland-share-picker (launched by xdg-desktop-portal-hyprland for the
+  # screen/window picker, e.g. OBS's "Open Selector" in Screen/Window
+  # Capture (Portal)) segfaults instantly on launch when QT_QPA_PLATFORMTHEME
+  # (qt5ct, from stylix) and QT_STYLE_OVERRIDE (kvantum) are both set: Qt6's
+  # QProxyStyle::standardPalette() recurses infinitely against this
+  # kvantum+qt5ct combo. Confirmed by running the binary directly: it exits
+  # 139 (SIGSEGV) with the real env, but runs fine with both unset. Strip
+  # them only for this service so the rest of the desktop keeps its kvantum
+  # theme.
+  systemd.user.services.xdg-desktop-portal-hyprland.serviceConfig.UnsetEnvironment = [
+    "QT_QPA_PLATFORMTHEME"
+    "QT_STYLE_OVERRIDE"
+  ];
 
   programs.zsh.enable = true;
 
