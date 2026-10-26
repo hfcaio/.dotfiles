@@ -153,6 +153,9 @@ in pkgs.buildFHSEnv {
       # Virtual framebuffer
       xorg-server
       xvfb-run
+
+      # Para abrir a janela do robot no navegador do host
+      xdg-utils
     ]);
 
   runScript = "${webots-unwrapped}/bin/webots";
@@ -160,5 +163,9 @@ in pkgs.buildFHSEnv {
   profile = ''
     export WEBOTS_HOME=${webots-unwrapped}/webots
     export LD_LIBRARY_PATH=${webots-unwrapped}/webots/lib:$LD_LIBRARY_PATH
+
+    # Webots traz seu próprio Qt; variáveis do host apontam para um Qt de patch
+    # version diferente (5.15.18 vs 5.15.0) e os plugins são rejeitados por ABI.
+    unset QT_PLUGIN_PATH QML2_IMPORT_PATH QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE QTWEBKIT_PLUGIN_PATH
   '';
 }

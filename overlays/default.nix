@@ -31,9 +31,19 @@
     # });
   };
 
+  # pkgs.stable.<name> -> pacote da branch estavel (nixpkgs input)
   stable-packages = final: _prev: {
-    stable = import inputs.nixpkgs-stable {
-      system = final.system;
+    stable = import inputs.nixpkgs {
+      inherit (final.stdenv.hostPlatform) system;
+      config.allowUnfree = true;
+    };
+  };
+
+  # pkgs.unstable.<name> -> pacote do nixos-unstable, usavel em qualquer
+  # feature sem precisar receber `inputs` como argumento do modulo.
+  unstable-packages = final: _prev: {
+    unstable = import inputs.nixpkgs-unstable {
+      inherit (final.stdenv.hostPlatform) system;
       config.allowUnfree = true;
     };
   };

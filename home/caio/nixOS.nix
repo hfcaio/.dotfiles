@@ -25,11 +25,14 @@
       nvim.enable = true;
       python.enable = true;
       fzf.enable = true;
+      opencode.enable = true;
+      claude.enable = true;
       direnv.enable = true;
       tmux.enable = true;
     };
     desktop = {
       hyprland.enable = true;
+      t3code.enable = true;
 			quickshell.enable = true;
       mujoco.enable = true;
       matlab.enable = true;
@@ -53,11 +56,12 @@
       obs.enable = true;
       vagrant.enable = true;
       claude.enable = true;
-      claude.desktop.enable = true;
       brave.enable = true;
       code.enable = true;
       onedrive.enable = true;
       vlc.enable = true;
+      obsidian.enable = true;
+      webots.enable = true;
     };
   };
 }

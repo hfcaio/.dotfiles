@@ -21,6 +21,7 @@
     nvim.enable = true;
     fzf.enable = true;
     direnv.enable = true;
+    opencode.enable = true;
     tmux.enable = true;
   };
 }

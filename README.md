@@ -42,6 +42,7 @@ Each feature has its own `.nix` file and is enabled in the machine profile.
 | `python` | python3 + pip |
 | `lsp` | LSP servers for C/C++, Python, Nix, Lua, Typst |
 | `fetch` | neofetch |
+| `claude` | Claude Code CLI + `~/.claude` config (optional) |
 
 Base packages always present: `btop`, `tldr`, `zip`, `unzip`, `wget`, `nixfmt`.
 
@@ -57,7 +58,7 @@ Base packages always present: `btop`, `tldr`, `zip`, `unzip`, `wget`, `nixfmt`.
 | `discord` | Discord |
 | `obs` | OBS Studio |
 | `vagrant` | Vagrant |
-| `claude` | Claude Code CLI |
+| `claude` | Claude Desktop |
 | `arduino` | arduino-ide + arduino-cli |
 | `typst` | typst + tinymist |
 | `latex` | texlive |
