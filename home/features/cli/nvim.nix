@@ -28,14 +28,15 @@ in
         harpoon
         yazi-nvim
         lualine-nvim
-        # Sorter nativo do telescope (C). Sem ele o live_grep fica lento assim
-        # que o projecto cresce.
         telescope-fzf-native-nvim
+        # tree-sitter highlight (the regex syntax breaks on multi-line TS exports); started in init.lua
+        (nvim-treesitter.withPlugins (p: [
+          p.typescript p.tsx p.javascript p.json
+          p.c p.cpp p.cmake p.proto p.nix p.lua p.bash p.markdown
+        ]))
       ];
 
-      # O live_grep do telescope invoca o rg; o find_files prefere o fd. Aqui
-      # ficam no PATH do proprio nvim, para nao dependerem de o
-      # features.cli.fzf estar ligado nem do PATH da shell que o lancou.
+      # O live_grep do telescope invoca o rg; o find_files prefere o fd.
       extraPackages = with pkgs; [
         ripgrep
         fd

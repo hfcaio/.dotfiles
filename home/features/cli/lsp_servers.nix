@@ -11,6 +11,7 @@ in {
     typst.enable  = mkOption { type = types.bool; default = false; description = "Typst LSP (tinymist)"; };
     python.enable = mkOption { type = types.bool; default = false; description = "Python LSP (pyright)"; };
     lua.enable    = mkOption { type = types.bool; default = false; description = "Lua LSP (lua-language-server)"; };
+    web.enable    = mkOption { type = types.bool; default = false; description = "TS/JS, JSON, YAML LSPs (typescript-language-server, vscode-langservers-extracted, yaml-language-server)"; };
   };
 
   config = mkIf cfg.enable {
@@ -20,6 +21,7 @@ in {
       ++ (optionals cfg.nix.enable    [ nil ])
       ++ (optionals cfg.typst.enable  [ tinymist ])
       ++ (optionals cfg.python.enable [ pyright ])
-      ++ (optionals cfg.lua.enable    [ lua-language-server ]);
+      ++ (optionals cfg.lua.enable    [ lua-language-server ])
+      ++ (optionals cfg.web.enable    [ typescript-language-server typescript vscode-langservers-extracted yaml-language-server ]);
   };
 }

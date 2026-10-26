@@ -27,10 +27,16 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' 
 vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
 -- setting color theme
---vim.cmd.colorscheme("catppuccin-mocha")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.cmd.colorscheme("catppuccin-mocha")
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" }
+-- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+
+-- tree-sitter highlight where a parser exists (grammars in nvim.nix); other filetypes keep the
+-- regex syntax
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args) pcall(vim.treesitter.start, args.buf) end,
+})
 
 -- Keymaps
 vim.keymap.set('n', '<Tab>', '>>', { desc = 'Indent line' })
@@ -319,5 +325,38 @@ vim.lsp.config('qmlls', {
 	capabilities = capabilities,
 })
 
+-- TypeScript/JavaScript LSP
+vim.lsp.config('ts_ls', {
+	cmd = { 'typescript-language-server', '--stdio' },
+	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+	root_markers = { 'pnpm-workspace.yaml', 'pnpm-lock.yaml', 'package-lock.json', 'yarn.lock', 'tsconfig.json', 'package.json', '.git' },
+	capabilities = capabilities,
+	init_options = { hostInfo = 'neovim' },
+})
+
+-- JSON LSP
+vim.lsp.config('jsonls', {
+	cmd = { 'vscode-json-language-server', '--stdio' },
+	filetypes = { 'json', 'jsonc' },
+	root_markers = { 'package.json', '.git' },
+	capabilities = capabilities,
+	init_options = { provideFormatter = true },
+})
+
+-- YAML LSP
+vim.lsp.config('yamlls', {
+	cmd = { 'yaml-language-server', '--stdio' },
+	filetypes = { 'yaml', 'yaml.docker-compose' },
+	root_markers = { '.git' },
+	capabilities = capabilities,
+	settings = {
+		yaml = {
+			schemaStore = { enable = true, url = 'https://www.schemastore.org/api/json/catalog.json' },
+			format = { enable = true },
+		},
+		redhat = { telemetry = { enabled = false } },
+	},
+})
+
 vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls', 'tinymist', 'arduino-language-server',
-	'qmlls' })
+	'qmlls', 'ts_ls', 'jsonls', 'yamlls' })

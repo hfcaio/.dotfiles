@@ -16,6 +16,7 @@
       nix.enable    = true;
       python.enable = true;
       lua.enable    = true;
+      web.enable    = true;
     };
     nvim.enable = true;
     fzf.enable = true;
