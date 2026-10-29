@@ -26,6 +26,7 @@
       python.enable = true;
       fzf.enable = true;
       opencode.enable = true;
+      ollama.enable = true;
       claude.enable = true;
       direnv.enable = true;
       tmux.enable = true;
