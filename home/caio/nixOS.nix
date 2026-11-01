@@ -27,6 +27,7 @@
       fzf.enable = true;
       opencode.enable = true;
       ollama.enable = true;
+      gh.enable = true;
       claude.enable = true;
       direnv.enable = true;
       tmux.enable = true;
