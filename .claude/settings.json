@@ -3,9 +3,16 @@
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "tokeneconomizer@tokeneconomizer": true
   },
   "extraKnownMarketplaces": {
+    "tokeneconomizer": {
+      "source": {
+        "source": "github",
+        "repo": "microsoft/TokenEconomizer"
+      }
+    },
     "buildwithclaude": {
       "source": {
         "source": "github",
