@@ -37,6 +37,10 @@
       t3code.enable = true;
 			quickshell.enable = true;
       mujoco.enable = true;
+      ros2 = {
+        enable = true;
+        gui = true;
+      };
       matlab.enable = true;
       fonts.enable = false;
       blender.enable = false;

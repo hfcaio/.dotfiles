@@ -1,4 +1,4 @@
-{ config, lib, outputs, pkgs, ... }: {
+{ config, lib, inputs, outputs, pkgs, ... }: {
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -7,6 +7,7 @@
       outputs.overlays.modifications
       outputs.overlays.stable-packages
       outputs.overlays.unstable-packages
+      inputs.ros.overlays.default
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default

@@ -47,6 +47,8 @@ The feature file itself only installs tools and writes config; which features ar
 ### Custom packages & overlays
 `pkgs/` holds callPackage-style derivations (matlab, matlab-shell, webots-fhs, unitree_sdk2, claude-desktop). They're exposed through `overlays/default.nix` → `additions` and reachable as plain `pkgs.<name>` anywhere in the config.
 
+Tools enter via home-manager features, never via `nix develop`/devShells. ROS 2 lives in its own flake (`~/git_projects/personal/ros`, input `ros`) and is installed by `features.desktop.ros2`.
+
 ### Scripts (git submodule)
 `scripts/` is a separate repo (`git@github.com:hfcaio/scripts.git`). After cloning, run `git submodule update --init`. The `blt` alias and anything else there resolves via the hard-coded `scripts_dir` in `zsh.nix`.
 

@@ -719,8 +719,26 @@
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "ros": "ros",
         "stylix": "stylix",
         "zen-browser": "zen-browser"
+      }
+    },
+    "ros": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793377990,
+        "narHash": "sha256-QL6byxEH9jfSRA3g5eH1PdEl7KqZz95VIbJwsEbkwfg=",
+        "path": "/home/caio/git_projects/personal/ros",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/caio/git_projects/personal/ros",
+        "type": "path"
       }
     },
     "stylix": {
