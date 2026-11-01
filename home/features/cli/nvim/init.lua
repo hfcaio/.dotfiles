@@ -234,26 +234,10 @@ vim.lsp.config('clangd', {
 
 })
 
--- Arduino LSP
-local clangd = vim.fn.exepath("clangd")
-local arduino_cli = vim.fn.exepath("arduino-cli")
-
 vim.filetype.add({
 	extension = {
 		ino = "cpp"
 	}
-})
-
-vim.lsp.config('arduino-language-server', {
-	cmd = {
-		'arduino-language-server',
-		'-clangd', clangd,
-		'-cli', arduino_cli,
-		'-cli-config', vim.env.HOME .. '/.arduino15/arduino-cli.yaml',
-		'-fqbn', 'arduino:mbed_rp2040:pico',
-	},
-	filetypes = { 'c', 'cpp', 'ino' },
-	capabilities = capabilities,
 })
 
 -- Nix LSP
@@ -358,5 +342,66 @@ vim.lsp.config('yamlls', {
 	},
 })
 
-vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls', 'tinymist', 'arduino-language-server',
-	'qmlls', 'ts_ls', 'jsonls', 'yamlls' })
+-- GitHub Copilot: copilot-language-server (features.cli.lsp.copilot) + inline completion nativa
+-- do nvim 0.12. Sugestao aparece em cinza; <Tab> aceita. Login: :CopilotSignIn (uma vez).
+vim.lsp.config('copilot', {
+	cmd = { 'copilot-language-server', '--stdio' },
+	root_markers = { '.git' },
+	init_options = {
+		editorInfo = { name = 'Neovim', version = tostring(vim.version()) },
+		editorPluginInfo = { name = 'Neovim', version = tostring(vim.version()) },
+	},
+	settings = { telemetry = { telemetryLevel = 'off' } },
+})
+
+vim.lsp.inline_completion.enable()
+
+vim.keymap.set('i', '<Tab>', function()
+	if not vim.lsp.inline_completion.get() then
+		return '<Tab>'
+	end
+end, { expr = true, desc = 'Aceitar sugestao do Copilot' })
+
+-- Proxima/anterior sugestao do Copilot
+vim.keymap.set('i', '<M-]>', function() vim.lsp.inline_completion.select({ count = 1 }) end,
+	{ desc = 'Copilot: proxima sugestao' })
+vim.keymap.set('i', '<M-[>', function() vim.lsp.inline_completion.select({ count = -1 }) end,
+	{ desc = 'Copilot: sugestao anterior' })
+
+-- Login via device flow: copia o codigo pro clipboard e o servidor abre o navegador.
+vim.api.nvim_create_user_command('CopilotSignIn', function()
+	local client = vim.lsp.get_clients({ name = 'copilot' })[1]
+	if not client then
+		return vim.notify('Copilot LSP nao esta rodando (abra um arquivo primeiro)', vim.log.levels.ERROR)
+	end
+	client:request('signIn', vim.empty_dict(), function(err, result)
+		if err then
+			return vim.notify('Copilot: ' .. err.message, vim.log.levels.ERROR)
+		end
+		if result.status == 'AlreadySignedIn' then
+			return vim.notify('Copilot: ja logado como ' .. result.user)
+		end
+		if result.userCode then
+			vim.fn.setreg('+', result.userCode)
+			vim.notify(('Copilot: codigo %s copiado. Cole em %s'):format(result.userCode, result.verificationUri))
+		end
+		if result.command then
+			client:exec_cmd(result.command, { bufnr = 0 }, function(cmd_err, status)
+				if cmd_err then
+					return vim.notify('Copilot: ' .. cmd_err.message, vim.log.levels.ERROR)
+				end
+				vim.notify('Copilot: logado como ' .. ((status and status.user) or '?'))
+			end)
+		end
+	end)
+end, { desc = 'Login no GitHub Copilot' })
+
+vim.api.nvim_create_user_command('CopilotSignOut', function()
+	local client = vim.lsp.get_clients({ name = 'copilot' })[1]
+	if client then
+		client:request('signOut', vim.empty_dict(), function() vim.notify('Copilot: deslogado') end)
+	end
+end, { desc = 'Logout do GitHub Copilot' })
+
+vim.lsp.enable({ 'clangd', 'nil_ls', 'pyright', 'lua_ls', 'tinymist',
+	'qmlls', 'ts_ls', 'jsonls', 'yamlls', 'copilot' })

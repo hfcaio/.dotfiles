@@ -16,11 +16,11 @@
       lsp = {
         enable = true;
         cpp.enable = true;
-        arduino.enable = true;
         nix.enable = true;
         typst.enable = true;
         python.enable = true;
         lua.enable = true;
+        copilot.enable = true;
       };
       nvim.enable = true;
       python.enable = true;
