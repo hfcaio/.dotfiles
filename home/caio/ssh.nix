@@ -26,6 +26,8 @@
       "diana" = {
         Hostname = "diana.inesc-id.pt";
         User = "caiofreitas";
+        IdentityFile = "~/.ssh/id_ed25519_diana";
+        IdentitiesOnly = true;
       };
       "cluster" = {
         Hostname = "cluster.rnl.tecnico.ulisboa.pt";
