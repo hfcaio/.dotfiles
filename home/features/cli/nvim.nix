@@ -9,7 +9,14 @@ let
   cfg = config.features.cli.nvim;
 in
 {
-  options.features.cli.nvim.enable = mkEnableOption "install neovim plugins and configure neovim";
+  options.features.cli.nvim = {
+    enable = mkEnableOption "install neovim plugins and configure neovim";
+    flavour = mkOption {
+      type = types.enum [ "latte" "frappe" "macchiato" "mocha" ];
+      default = "mocha";
+      description = "catppuccin flavour used as the neovim colorscheme (latte is the light one)";
+    };
+  };
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
@@ -42,7 +49,9 @@ in
         fd
       ];
 
-      initLua = builtins.readFile ./nvim/init.lua;
+      initLua = ''
+        vim.g.nix_catppuccin_flavour = "${cfg.flavour}"
+      '' + builtins.readFile ./nvim/init.lua;
     };
   };
 }
