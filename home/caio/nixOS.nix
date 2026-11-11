@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 {
   imports = [
     ../common
@@ -7,6 +7,10 @@
     ./home.nix
     ./ssh.nix
   ];
+
+  # ROS 2 so existe nesta maquina (input path:/home/caio/...), por isso o
+  # overlay fica aqui e nao em home/common.
+  nixpkgs.overlays = [ inputs.ros.overlays.default ];
 
   features = {
     cli = {
