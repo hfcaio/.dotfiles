@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let cfg = config.features.cli.tmux;
 in {
@@ -7,6 +7,7 @@ in {
   config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
+      shell = "${pkgs.zsh}/bin/zsh";
       prefix = "C-b";
       mouse = true;
       keyMode = "vi";
