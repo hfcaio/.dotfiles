@@ -30,6 +30,7 @@
       gh.enable = true;
       claude.enable = true;
       direnv.enable = true;
+      eza.enable = true;
       tmux.enable = true;
     };
     desktop = {
